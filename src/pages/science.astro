@@ -1,0 +1,644 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<BaseLayout
+  title="The Science — TriCel CxnA | iDEC 2025"
+  description="Background science: cellulose structure, the three enzyme classes, CxnA's origin, directed evolution, and key literature for the CxnA directed evolution project."
+>
+
+  <!-- ═══ PAGE HERO ═══ -->
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Background Science</p>
+      <h1>Cellulose, enzymes, and directed evolution</h1>
+      <p>
+        The biology behind this project — from cellulose's molecular structure to how we use
+        laboratory evolution to engineer new protein functions.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ CELLULOSE ═══ -->
+  <section class="section section--alt" aria-labelledby="cellulose-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">The substrate</p>
+        <h2 id="cellulose-heading">What is cellulose, and why is it hard to break down?</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="prose">
+          <p>
+            Cellulose is the structural polymer that makes up plant cell walls. Chemically, it
+            is a linear chain of glucose molecules linked by <strong>β-1,4 glycosidic bonds</strong>
+            — the same building blocks as starch, but connected at a different angle. That
+            seemingly small chemical difference is what makes cellulose so recalcitrant.
+          </p>
+          <p>
+            Where starch forms loose, helical coils that are easily digested, cellulose chains
+            pack tightly into hydrogen-bonded, crystalline microfibrils. This crystalline
+            structure is extraordinarily stable — it resists most chemical and enzymatic
+            attack, which is why wood is strong and cotton doesn't dissolve in water.
+          </p>
+          <p>
+            To fully convert cellulose to glucose requires breaking through multiple levels of
+            structural complexity: first loosening the crystalline packing, then fragmenting
+            the chains, then cleaving the resulting disaccharide cellobiose into free glucose.
+            Each step requires a different enzyme class, acting synergistically.
+          </p>
+
+          <details class="expand mt-6">
+            <summary>Why does the β-1,4 linkage matter so much?</summary>
+            <div class="expand-body">
+              <p>
+                The β configuration at the glycosidic bond causes each glucose unit to rotate
+                180° relative to its neighbour, producing an extended, flat ribbon rather
+                than a helix. These flat ribbons can stack and hydrogen-bond to each other
+                very efficiently, forming the tight crystalline bundles that give cellulose
+                its mechanical strength.
+              </p>
+              <p>
+                Animals lack the enzymes (cellulases) to break β-1,4 bonds — which is why
+                cows, termites, and other cellulose-eating animals rely on gut microbes that
+                do produce cellulases. Fungi and bacteria such as <em>Cellulomonas fimi</em>
+                (the source organism of CxnA) are among the most efficient natural cellulose
+                degraders known.
+              </p>
+            </div>
+          </details>
+        </div>
+
+        <!-- Cellulose structure diagram -->
+        <div>
+          <figure class="diagram-figure">
+            <svg viewBox="0 0 380 260" xmlns="http://www.w3.org/2000/svg" class="sci-svg" aria-labelledby="cellulose-svg-title">
+              <title id="cellulose-svg-title">Cellulose polymer structure: glucose units linked by β-1,4 glycosidic bonds packing into crystalline microfibrils</title>
+              <!-- Chain 1 -->
+              <g transform="translate(0,20)">
+                <rect x="20" y="60" width="52" height="36" rx="8" fill="#1a6648" opacity="0.9"/>
+                <text x="46" y="82" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Glc</text>
+                <!-- bond -->
+                <line x1="72" y1="78" x2="95" y2="78" stroke="#7ec9a6" stroke-width="2"/>
+                <text x="83" y="72" text-anchor="middle" font-size="8" fill="#7ec9a6" font-family="system-ui,sans-serif">β-1,4</text>
+                <rect x="95" y="60" width="52" height="36" rx="8" fill="#1a6648" opacity="0.9"/>
+                <text x="121" y="82" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Glc</text>
+                <line x1="147" y1="78" x2="170" y2="78" stroke="#7ec9a6" stroke-width="2"/>
+                <text x="158" y="72" text-anchor="middle" font-size="8" fill="#7ec9a6" font-family="system-ui,sans-serif">β-1,4</text>
+                <rect x="170" y="60" width="52" height="36" rx="8" fill="#1a6648" opacity="0.9"/>
+                <text x="196" y="82" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Glc</text>
+                <line x1="222" y1="78" x2="245" y2="78" stroke="#7ec9a6" stroke-width="2"/>
+                <rect x="245" y="60" width="52" height="36" rx="8" fill="#1a6648" opacity="0.7"/>
+                <text x="271" y="82" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Glc</text>
+                <text x="308" y="82" text-anchor="start" font-size="14" fill="#4aa87a" font-family="system-ui,sans-serif">···</text>
+                <!-- Chain label -->
+                <text x="10" y="52" font-size="9.5" fill="#5aaa85" font-family="system-ui,sans-serif" font-weight="600">Chain 1</text>
+              </g>
+
+              <!-- Chain 2 (offset) -->
+              <g transform="translate(18,80)">
+                <rect x="20" y="60" width="52" height="36" rx="8" fill="#2b5a40" opacity="0.75"/>
+                <text x="46" y="82" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Glc</text>
+                <line x1="72" y1="78" x2="95" y2="78" stroke="#7ec9a6" stroke-width="2" opacity="0.6"/>
+                <rect x="95" y="60" width="52" height="36" rx="8" fill="#2b5a40" opacity="0.75"/>
+                <text x="121" y="82" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Glc</text>
+                <line x1="147" y1="78" x2="170" y2="78" stroke="#7ec9a6" stroke-width="2" opacity="0.6"/>
+                <rect x="170" y="60" width="52" height="36" rx="8" fill="#2b5a40" opacity="0.75"/>
+                <text x="196" y="82" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Glc</text>
+                <line x1="222" y1="78" x2="245" y2="78" stroke="#7ec9a6" stroke-width="2" opacity="0.6"/>
+                <rect x="245" y="60" width="52" height="36" rx="8" fill="#2b5a40" opacity="0.6"/>
+                <text x="271" y="82" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Glc</text>
+                <text x="10" y="52" font-size="9.5" fill="#5aaa85" font-family="system-ui,sans-serif" font-weight="600">Chain 2</text>
+              </g>
+
+              <!-- H-bond indicators between chains -->
+              <line x1="64" y1="115" x2="56" y2="140" stroke="#a8d5bc" stroke-width="1" stroke-dasharray="3,2"/>
+              <line x1="139" y1="115" x2="131" y2="140" stroke="#a8d5bc" stroke-width="1" stroke-dasharray="3,2"/>
+              <line x1="214" y1="115" x2="206" y2="140" stroke="#a8d5bc" stroke-width="1" stroke-dasharray="3,2"/>
+              <text x="25" y="132" font-size="8" fill="#a8d5bc" font-family="system-ui,sans-serif" font-style="italic">H-bonds</text>
+
+              <!-- Labels -->
+              <text x="20" y="235" font-size="9.5" fill="#7ec9a6" font-family="system-ui,sans-serif">
+                ↕ Hydrogen bonds between chains → crystalline packing
+              </text>
+              <text x="20" y="252" font-size="9.5" fill="#5aaa85" font-family="system-ui,sans-serif">
+                Each unit = glucose (C₆H₁₂O₆); β-1,4 linkage flips alternate units 180°
+              </text>
+            </svg>
+            <figcaption>Cellulose polymer: alternating glucose units linked by β-1,4 glycosidic bonds. Hydrogen bonds between parallel chains create the crystalline structure that resists degradation.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ THREE ENZYME TYPES ═══ -->
+  <section class="section" aria-labelledby="enzymes-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">The enzyme system</p>
+        <h2 id="enzymes-heading">Three enzyme classes — all required, acting in concert</h2>
+        <p>
+          No single natural enzyme can convert crystalline cellulose to glucose alone.
+          A minimum of three activities are required, and they are synergistic — each one
+          makes the others more effective.
+        </p>
+      </div>
+
+      <!-- Three-enzyme pathway diagram -->
+      <figure class="pathway-figure" aria-labelledby="pathway-svg-title">
+        <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" class="pathway-svg" aria-labelledby="pathway-svg-title">
+          <title id="pathway-svg-title">Cellulose degradation pathway: exoglucanase attacks crystalline cellulose to release cellobiose, endoglucanase cleaves internal bonds, beta-glucosidase converts cellobiose to glucose</title>
+
+          <!-- Stage 1: Crystalline cellulose -->
+          <rect x="10" y="50" width="160" height="100" rx="10" fill="#edf3f0" stroke="#c7dcd0" stroke-width="1.5"/>
+          <text x="90" y="88" text-anchor="middle" font-size="11" fill="#2b4f3d" font-family="system-ui,sans-serif" font-weight="700">Crystalline</text>
+          <text x="90" y="103" text-anchor="middle" font-size="11" fill="#2b4f3d" font-family="system-ui,sans-serif" font-weight="700">Cellulose</text>
+          <text x="90" y="122" text-anchor="middle" font-size="9" fill="#52706a" font-family="system-ui,sans-serif">tightly packed fibrils</text>
+          <text x="90" y="137" text-anchor="middle" font-size="9" fill="#52706a" font-family="system-ui,sans-serif">highly resistant</text>
+
+          <!-- Arrow 1 -->
+          <path d="M170,100 L218,100" stroke="#1a6648" stroke-width="2.5" marker-end="url(#arr1)" fill="none"/>
+          <defs>
+            <marker id="arr1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#1a6648"/>
+            </marker>
+            <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#1a6648"/>
+            </marker>
+            <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#c9862a"/>
+            </marker>
+          </defs>
+
+          <!-- Enzyme label 1 -->
+          <rect x="172" y="64" width="44" height="28" rx="5" fill="#1a6648"/>
+          <text x="194" y="80" text-anchor="middle" font-size="8.5" fill="white" font-family="system-ui,sans-serif" font-weight="700">Exo-</text>
+          <text x="194" y="91" text-anchor="middle" font-size="8" fill="#a8d5bc" font-family="system-ui,sans-serif">GH10/Cex</text>
+
+          <!-- Stage 2: Amorphous + cellobiose -->
+          <rect x="220" y="50" width="180" height="100" rx="10" fill="#e8f4ee" stroke="#b0d8c0" stroke-width="1.5"/>
+          <text x="310" y="82" text-anchor="middle" font-size="10.5" fill="#1a4a35" font-family="system-ui,sans-serif" font-weight="700">Amorphous cellulose</text>
+          <text x="310" y="97" text-anchor="middle" font-size="10.5" fill="#1a4a35" font-family="system-ui,sans-serif" font-weight="700">+ cellobiose</text>
+          <text x="310" y="116" text-anchor="middle" font-size="9" fill="#52706a" font-family="system-ui,sans-serif">chain ends exposed</text>
+          <text x="310" y="131" text-anchor="middle" font-size="9" fill="#52706a" font-family="system-ui,sans-serif">shorter oligomers</text>
+
+          <!-- Arrow 2 (endoglucanase) -->
+          <path d="M400,100 L448,100" stroke="#1a6648" stroke-width="2.5" marker-end="url(#arr2)" fill="none"/>
+          <rect x="402" y="64" width="44" height="28" rx="5" fill="#1a6648"/>
+          <text x="424" y="80" text-anchor="middle" font-size="8.5" fill="white" font-family="system-ui,sans-serif" font-weight="700">Endo-</text>
+          <text x="424" y="91" text-anchor="middle" font-size="8" fill="#a8d5bc" font-family="system-ui,sans-serif">GH10/CenA</text>
+
+          <!-- Stage 3: Cellobiose -->
+          <rect x="450" y="50" width="150" height="100" rx="10" fill="#e8f4ee" stroke="#b0d8c0" stroke-width="1.5"/>
+          <text x="525" y="88" text-anchor="middle" font-size="10.5" fill="#1a4a35" font-family="system-ui,sans-serif" font-weight="700">Cellobiose</text>
+          <text x="525" y="103" text-anchor="middle" font-size="9.5" fill="#1a4a35" font-family="system-ui,sans-serif">(Glc–Glc dimer)</text>
+          <text x="525" y="122" text-anchor="middle" font-size="9" fill="#52706a" font-family="system-ui,sans-serif">one step from glucose</text>
+
+          <!-- Arrow 3 (beta-glucosidase) -->
+          <path d="M600,100 L648,100" stroke="#c9862a" stroke-width="2.5" stroke-dasharray="6,3" marker-end="url(#arr3)" fill="none"/>
+          <rect x="601" y="64" width="46" height="28" rx="5" fill="#8a5a12" stroke="#c9862a" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <text x="624" y="80" text-anchor="middle" font-size="8.5" fill="white" font-family="system-ui,sans-serif" font-weight="700">β-Glcase</text>
+          <text x="624" y="91" text-anchor="middle" font-size="8" fill="#f0c070" font-family="system-ui,sans-serif">GH1 (target)</text>
+
+          <!-- Stage 4: Glucose -->
+          <rect x="650" y="50" width="140" height="100" rx="10" fill="#fdf0e0" stroke="#c9862a" stroke-width="2"/>
+          <text x="720" y="88" text-anchor="middle" font-size="11" fill="#7a3a08" font-family="system-ui,sans-serif" font-weight="700">Glucose</text>
+          <text x="720" y="103" text-anchor="middle" font-size="9.5" fill="#a05010" font-family="system-ui,sans-serif">fermentable sugar</text>
+          <text x="720" y="122" text-anchor="middle" font-size="9" fill="#b45309" font-family="system-ui,sans-serif">usable for biofuel</text>
+
+          <!-- Legend -->
+          <rect x="10" y="170" width="12" height="12" rx="2" fill="#1a6648"/>
+          <text x="27" y="181" font-size="9" fill="#52706a" font-family="system-ui,sans-serif">Existing in CxnA WT</text>
+          <rect x="160" y="170" width="12" height="12" rx="2" fill="none" stroke="#c9862a" stroke-width="1.5" stroke-dasharray="4,2"/>
+          <text x="177" y="181" font-size="9" fill="#52706a" font-family="system-ui,sans-serif">Project A target — not yet present in CxnA</text>
+        </svg>
+        <figcaption>
+          Complete cellulose degradation pathway. Exo- and endoglucanases (both present in CxnA wild-type) act synergistically
+          on crystalline and amorphous cellulose. Beta-glucosidase (Project A target) completes the pathway to free glucose.
+        </figcaption>
+      </figure>
+
+      <!-- Three enzyme cards -->
+      <div class="grid-3 mt-10">
+        <div class="enzyme-card">
+          <div class="enzyme-badge">GH10 / Cex</div>
+          <h3>Exoglucanase</h3>
+          <p class="enzyme-status"><span class="badge badge--confirmed">Present in CxnA WT</span></p>
+          <p>
+            Attacks crystalline cellulose from the non-reducing ends of chains, processively
+            releasing the disaccharide cellobiose. Particularly important for initiating
+            degradation of the crystalline fraction.
+          </p>
+          <details class="expand mt-4">
+            <summary>Structural and mechanistic detail</summary>
+            <div class="expand-body">
+              <p>
+                The Cex (exoglucanase) domain of CxnA belongs to glycoside hydrolase family
+                GH10. GH10 enzymes use a retaining double-displacement mechanism, with two
+                conserved glutamate residues (GLU127 as nucleophile and GLU233 as acid/base
+                in this project's structural model) coordinating catalysis.
+                <a class="cite" href="#ref-notenboom" aria-label="Reference 3: Notenboom et al. 1998">[3]</a>
+              </p>
+              <p>
+                The active-site tunnel topology of exoglucanases enables processive movement
+                along the cellulose chain, explaining their preference for crystalline
+                rather than amorphous substrates.
+              </p>
+            </div>
+          </details>
+        </div>
+
+        <div class="enzyme-card">
+          <div class="enzyme-badge">GH10 / CenA</div>
+          <h3>Endoglucanase</h3>
+          <p class="enzyme-status"><span class="badge badge--confirmed">Present in CxnA WT</span></p>
+          <p>
+            Cleaves β-1,4 bonds at internal positions within the cellulose chain — not at the
+            ends. This creates new chain ends that the exoglucanase can then attack, making
+            the two activities strongly synergistic.
+          </p>
+          <details class="expand mt-4">
+            <summary>Structural and mechanistic detail</summary>
+            <div class="expand-body">
+              <p>
+                CenA-type endoglucanases have an open active-site cleft (rather than a tunnel),
+                which enables them to bind and cleave internal bonds. CxnA uniquely combines
+                Cex and CenA activities in a single polypeptide, which is the starting point
+                for this project.
+                <a class="cite" href="#ref-duedu" aria-label="Reference 1: Duedu &amp; French 2016">[1]</a>
+              </p>
+            </div>
+          </details>
+        </div>
+
+        <div class="enzyme-card enzyme-card--target">
+          <div class="enzyme-badge enzyme-badge--target">GH1 / BGL</div>
+          <h3>Beta-glucosidase</h3>
+          <p class="enzyme-status"><span class="badge badge--progress">Project A target</span></p>
+          <p>
+            Converts the disaccharide cellobiose into two glucose molecules. This is the final
+            step in converting cellulose to fermentable sugar, and the activity this project
+            is attempting to evolve into CxnA.
+          </p>
+          <details class="expand mt-4">
+            <summary>Structural and mechanistic detail</summary>
+            <div class="expand-body">
+              <p>
+                GH1 family beta-glucosidases also use a retaining mechanism, with two
+                glutamate residues (catalytic nucleophile and acid/base). In this project's
+                structural model, GLU350 and GLU404 are identified as candidate positions.
+                <a class="cite" href="#ref-liu" aria-label="Reference 4: Liu et al. 2018">[4]</a>
+              </p>
+              <p>
+                A key finding from the docking analysis is the steric barrier formed by GLN87
+                and TRP281, which may limit cellobiose access to the active site. Understanding
+                and potentially overcoming this barrier is central to Project A's strategy.
+                See the <a href={`${b}/results#drylab-gh1`}>Results page</a> for full discussion.
+              </p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CxnA ORIGIN ═══ -->
+  <section class="section section--alt" aria-labelledby="cxna-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Our starting enzyme</p>
+        <h2 id="cxna-heading">CxnA: a naturally bifunctional cellulase</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="prose">
+          <p>
+            CxnA was originally described by Duedu &amp; French at the University of Edinburgh
+            in 2016.
+            <a class="cite" href="#ref-duedu" aria-label="Reference 1: Duedu &amp; French 2016">[1]</a>
+            It was isolated from <em>Cellulomonas fimi</em>, a Gram-positive soil bacterium
+            that is one of the most efficient natural cellulose degraders known, and notable
+            for producing a sophisticated multi-enzyme cellulose-degrading system.
+          </p>
+          <p>
+            What makes CxnA unusual is that it naturally combines two distinct catalytic
+            activities — exoglucanase and endoglucanase — in a single polypeptide chain.
+            Most organisms deploy these as separate enzymes. CxnA demonstrates that the
+            architecture is achievable, and raises the question of whether the same protein
+            could be evolved to accommodate a third.
+          </p>
+          <p>
+            The domain architecture of CxnA, as established by Duedu &amp; French and refined
+            in this project using AlphaFold3, comprises a GH10 catalytic domain (bearing both
+            Cex-type and CenA-type activities) and a GH1-fold domain that is the target for
+            directed evolution in Project A.
+          </p>
+
+          <div class="callout mt-6">
+            <p class="callout-title">Key datum: Structural validation</p>
+            <p>
+              The AlphaFold3 model of the GH10/Cex domain was validated against the
+              published crystal structure 1FHD (Notenboom et al., 1998
+              <a class="cite" href="#ref-notenboom" aria-label="Reference 3: Notenboom 1998">[3]</a>).
+              RMSD = <strong>0.293 Å</strong> over aligned Cα atoms — indicating
+              high structural accuracy and supporting the reliability of downstream
+              docking predictions. See <a href={`${b}/results#drylab-structure`}>Results</a>
+              for full validation analysis.
+            </p>
+          </div>
+        </div>
+
+        <div class="cxna-card card">
+          <h4 class="card-label">CxnA at a glance</h4>
+          <table class="info-table">
+            <tbody>
+              <tr><th>Source organism</th><td><em>Cellulomonas fimi</em></td></tr>
+              <tr><th>Original reference</th><td>Duedu &amp; French, 2016 <a class="cite" href="#ref-duedu">[1]</a></td></tr>
+              <tr><th>Institution</th><td>University of Edinburgh</td></tr>
+              <tr><th>Domain 1</th><td>GH10 (exo- and endoglucanase)</td></tr>
+              <tr><th>Domain 2</th><td>GH1-fold (catalytically inactive in WT for GH1-type activity)</td></tr>
+              <tr><th>Natural function</th><td>Bifunctional cellulose degradation</td></tr>
+              <tr><th>Crystal structure ref</th><td>1FHD (GH10/Cex, Notenboom 1998 <a class="cite" href="#ref-notenboom">[3]</a>)</td></tr>
+              <tr><th>AlphaFold3 RMSD vs 1FHD</th><td class="mono"><strong>0.293 Å</strong> (validated)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DIRECTED EVOLUTION ═══ -->
+  <section class="section" aria-labelledby="devc-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">The method</p>
+        <h2 id="devc-heading">What is directed evolution?</h2>
+        <p>
+          A laboratory technique that mimics natural selection — but compressed into weeks,
+          and directed toward a specific functional goal.
+        </p>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="de-steps">
+            <div class="de-step">
+              <div class="de-step-num" aria-hidden="true">1</div>
+              <div>
+                <h3>Introduce random mutations</h3>
+                <p>
+                  Error-prone PCR (epPCR) amplifies the target gene with a deliberately elevated
+                  error rate, creating a library of thousands of sequence variants — each a slightly
+                  different version of the protein. This is analogous to natural mutation, but we
+                  control the rate.
+                </p>
+              </div>
+            </div>
+            <div class="de-step">
+              <div class="de-step-num" aria-hidden="true">2</div>
+              <div>
+                <h3>Apply selection pressure</h3>
+                <p>
+                  The mutant library is expressed in bacteria, which are then challenged with a
+                  condition that only cells expressing the desired activity can survive or grow
+                  well under. For Project A: growth on cellobiose as sole carbon source. For
+                  Project B: enhanced zone-clearing on CMC plates.
+                </p>
+              </div>
+            </div>
+            <div class="de-step">
+              <div class="de-step-num" aria-hidden="true">3</div>
+              <div>
+                <h3>Screen survivors</h3>
+                <p>
+                  Colonies that grow are screened with fluorogenic substrates (MUG for
+                  beta-glucosidase, MUC for exoglucanase) to quantify activity. False
+                  positives — cells that grew for reasons unrelated to the target activity —
+                  are identified and eliminated.
+                </p>
+              </div>
+            </div>
+            <div class="de-step">
+              <div class="de-step-num" aria-hidden="true">4</div>
+              <div>
+                <h3>Characterise and iterate</h3>
+                <p>
+                  Hits are sequenced to identify which mutations confer the activity, then
+                  validated in purified enzyme assays. The best variants can then be subjected
+                  to another round of mutagenesis — iterating toward the desired function.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="prose">
+          <h3>Why directed evolution works</h3>
+          <p>
+            Natural evolution explores protein sequence space over millions of generations
+            and years. Directed evolution recapitulates this process in the lab by:
+            deliberately narrowing the sequence space explored (we start from a protein that
+            already has related structure), applying strong artificial selection pressure
+            (survival on a specific substrate), and iterating rapidly (weeks, not millennia).
+          </p>
+          <p>
+            The key insight is that <strong>you don't need to rationally design every
+            mutation</strong>. The selection/screening step acts as the filter — you just
+            need to generate enough sequence diversity that beneficial mutations exist
+            somewhere in the library, and then find them.
+          </p>
+          <p>
+            This project also uses computational structural analysis (AlphaFold3 + docking)
+            to <em>guide</em> the mutagenesis — targeting epPCR to the regions most likely
+            to be functionally important, reducing the haystack that selection must search.
+          </p>
+          <div class="callout callout--warn mt-6">
+            <p class="callout-title">Important limitation</p>
+            <p>
+              Computational predictions guide but cannot replace experimental selection.
+              Docking scores predict approximate binding geometry; they do not predict whether
+              a mutation will actually confer catalytic activity in a living cell. All
+              computational findings in this project are treated as hypotheses to be tested
+              in the wet lab, not as conclusions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ KEY LITERATURE ═══ -->
+  <section class="section section--alt" aria-labelledby="lit-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Scientific foundation</p>
+        <h2 id="lit-heading">Key literature this project builds on</h2>
+      </div>
+
+      <div class="lit-grid">
+        <div class="lit-card">
+          <div class="lit-year">2016</div>
+          <h3>Duedu &amp; French — CxnA characterisation</h3>
+          <p id="ref-duedu">
+            The original description of CxnA as a bifunctional cellulase from
+            <em>Cellulomonas fimi</em>. Established the dual GH10 domain activity
+            and provided the sequence and expression system this project uses as
+            its starting point.
+          </p>
+          <div class="lit-role"><strong>Role in this project:</strong> Provides the wild-type CxnA baseline — gene sequence, expression protocol, confirmed activities, and domain architecture.</div>
+        </div>
+
+        <div class="lit-card">
+          <div class="lit-year">1998/2000</div>
+          <h3>Notenboom et al. — GH10/Cex crystal structure</h3>
+          <p id="ref-notenboom">
+            Crystal structure determination of the Cex exoglucanase domain (PDB: 1FHD and related
+            entries), establishing the active-site architecture including the catalytic glutamates.
+            <a class="cite" href="#ref-notenboom-full" aria-label="Reference 3: Notenboom 1998">[3]</a>
+          </p>
+          <div class="lit-role"><strong>Role in this project:</strong> Provides the gold-standard crystal structure used to validate AlphaFold3 predictions (RMSD 0.293 Å). Establishes GLU127 and GLU233 as the catalytic dyad.</div>
+        </div>
+
+        <div class="lit-card">
+          <div class="lit-year">2018</div>
+          <h3>Liu et al. — GH1 beta-glucosidase structure/function</h3>
+          <p id="ref-liu">
+            Structural and functional characterisation of a GH1 family beta-glucosidase,
+            including the catalytic mechanism and key active-site residues.
+            <a class="cite" href="#ref-liu-full" aria-label="Reference 4: Liu et al. 2018">[4]</a>
+          </p>
+          <div class="lit-role"><strong>Role in this project:</strong> Informs identification of candidate catalytic residues (GLU350, GLU404) in the GH1-fold domain of CxnA for Project A.</div>
+        </div>
+      </div>
+
+      <p class="mt-8" style="font-size:0.88rem; color:var(--c-text-muted)">
+        Full bibliography: <a href={`${b}/results#references`}>Results — References</a>.
+        All in-text citations on this page link to entries in that list.
+      </p>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .two-col {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: var(--sp-10);
+    align-items: start;
+  }
+  @media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Diagrams */
+  .diagram-figure, .pathway-figure { margin: 0; }
+  .sci-svg, .pathway-svg {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    padding: var(--sp-4);
+  }
+  .pathway-svg { max-width: 800px; margin-inline: auto; }
+  figcaption {
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+    margin-top: var(--sp-3);
+    font-style: italic;
+    text-align: center;
+    max-width: 70ch;
+    margin-inline: auto;
+  }
+
+  /* Enzyme cards */
+  .enzyme-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+  }
+  .enzyme-card--target { border: 2px dashed var(--c-accent); background: var(--c-accent-light); }
+  .enzyme-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--c-primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    padding: 0.2em 0.6em;
+    margin-bottom: var(--sp-3);
+  }
+  .enzyme-badge--target { background: var(--c-accent); }
+  .enzyme-card h3 { color: var(--c-secondary); margin-bottom: var(--sp-2); }
+  .enzyme-status { margin-bottom: var(--sp-3); }
+  .enzyme-card p { font-size: 0.9rem; color: var(--c-text-muted); }
+
+  /* CxnA info card */
+  .card-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--c-text-muted);
+    margin-bottom: var(--sp-4);
+  }
+  .info-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .info-table th, .info-table td { padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--c-border-light); vertical-align: top; }
+  .info-table th { font-weight: 600; color: var(--c-text-muted); width: 45%; white-space: nowrap; }
+  .info-table tr:last-child th, .info-table tr:last-child td { border-bottom: none; }
+
+  /* Directed evolution steps */
+  .de-steps { display: flex; flex-direction: column; gap: var(--sp-6); }
+  .de-step { display: flex; gap: var(--sp-4); align-items: flex-start; }
+  .de-step-num {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--c-primary);
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .de-step h3 { font-size: 1rem; color: var(--c-secondary); margin-bottom: var(--sp-2); }
+  .de-step p { font-size: 0.9rem; color: var(--c-text-muted); }
+
+  /* Literature cards */
+  .lit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--sp-5);
+  }
+  .lit-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-5);
+  }
+  .lit-year {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--c-primary);
+    background: var(--c-primary-light);
+    display: inline-block;
+    padding: 0.1em 0.5em;
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--sp-2);
+  }
+  .lit-card h3 { font-size: 1rem; color: var(--c-secondary); margin-bottom: var(--sp-2); }
+  .lit-card p { font-size: 0.88rem; color: var(--c-text-muted); }
+  .lit-role {
+    font-size: 0.82rem;
+    color: var(--c-text);
+    background: var(--c-surface-2);
+    border-radius: var(--radius-sm);
+    padding: var(--sp-2) var(--sp-3);
+    margin-top: var(--sp-3);
+  }
+</style>

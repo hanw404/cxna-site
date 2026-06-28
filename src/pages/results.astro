@@ -1,0 +1,896 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<BaseLayout
+  title="Results — TriCel CxnA | iDEC 2025"
+  description="Dry-lab results: AlphaFold3 validation, cellobiose docking, PLIP interaction analysis, and pose convergence. Wet-lab results pending."
+>
+
+  <!-- ═══ PAGE HERO ═══ -->
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Results</p>
+      <h1>Dry-lab results &amp; wet-lab placeholders</h1>
+      <p>
+        Computational structural analysis is complete. Wet-lab experimental results will
+        fill the structured placeholders below as data becomes available.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ STATUS SUMMARY ═══ -->
+  <section class="section section--alt" aria-labelledby="status-heading">
+    <div class="container">
+      <h2 id="status-heading" class="sr-only">Results status summary</h2>
+      <div class="status-grid">
+        <div class="status-card">
+          <h3>Dry Lab</h3>
+          <div class="status-items">
+            <div class="status-item"><span class="badge badge--confirmed">Confirmed</span> Structure prediction (AlphaFold3)</div>
+            <div class="status-item"><span class="badge badge--confirmed">Confirmed</span> RMSD validation vs 1FHD (0.293 Å)</div>
+            <div class="status-item"><span class="badge badge--confirmed">Confirmed</span> Cellobiose docking — GH10</div>
+            <div class="status-item"><span class="badge badge--confirmed">Confirmed</span> Cellobiose docking — GH1</div>
+            <div class="status-item"><span class="badge badge--confirmed">Confirmed</span> PLIP interaction analysis</div>
+            <div class="status-item"><span class="badge badge--confirmed">Confirmed</span> Pose convergence analysis</div>
+          </div>
+        </div>
+        <div class="status-card">
+          <h3>Wet Lab</h3>
+          <div class="status-items">
+            <div class="status-item"><span class="badge badge--progress">In Progress</span> CxnA cloning &amp; expression</div>
+            <div class="status-item"><span class="badge badge--progress">In Progress</span> epPCR library generation</div>
+            <div class="status-item"><span class="badge badge--progress">In Progress</span> Cellobiose selection (Project A)</div>
+            <div class="status-item"><span class="badge badge--progress">In Progress</span> CMC clearing assay (Project B)</div>
+            <div class="status-item"><span class="badge badge--pending">Pending</span> MUG/MUC/CMC screening</div>
+            <div class="status-item"><span class="badge badge--pending">Pending</span> Hit sequencing &amp; validation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- ═══ DRY LAB RESULTS ═══════════════════════════════════ -->
+  <!-- ══════════════════════════════════════════════════════ -->
+
+  <section class="section" id="drylab" aria-labelledby="drylab-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Computational results</p>
+        <h2 id="drylab-heading">Dry Lab — Structural analysis and docking</h2>
+      </div>
+
+      <!-- ─── DL-R1: Structure Validation ─── -->
+      <div class="result-block" id="drylab-structure">
+        <div class="result-header">
+          <div class="result-id">DL-R1</div>
+          <div>
+            <h3>AlphaFold3 structure quality &amp; RMSD validation</h3>
+            <div class="result-meta">
+              <span class="badge badge--confirmed">Confirmed</span>
+              <span class="result-method">Methods: <a href={`${b}/methods#drylab`}>DL-1, DL-2</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="result-body">
+          <p>
+            AlphaFold3 models were generated for the GH10/Cex domain and the GH1-fold domain
+            of CxnA. The GH10/Cex model was validated against the published crystal structure
+            1FHD (Notenboom et al., 1998
+            <a class="cite" href="#ref-notenboom">[3]</a>) by Cα RMSD alignment in PyMOL.
+          </p>
+
+          <div class="key-finding">
+            <div class="key-finding-label">Key Result</div>
+            <div class="key-finding-value">RMSD = <strong>0.293 Å</strong></div>
+            <div class="key-finding-context">
+              Cα RMSD over aligned GH10/Cex domain residues vs 1FHD crystal structure.
+              This is within the range expected for near-identical structures (&lt;1.0 Å),
+              indicating high structural accuracy in the AlphaFold3 model of the
+              active-site region.
+            </div>
+          </div>
+
+          <!-- Figure placeholder -->
+          <div class="figure-block">
+            <div class="figure-panel">
+              <div class="placeholder-block">
+                <div class="placeholder-icon" aria-hidden="true">🏗</div>
+                <strong>Figure: AlphaFold3 model overlaid on 1FHD crystal structure</strong>
+                <p>AlphaFold3 (green) vs 1FHD (grey) structural overlay. Active-site residues GLU127 and GLU233 highlighted. RMSD = 0.293 Å.</p>
+                <p class="figure-note">Add PyMOL session screenshot here: <code>figures/drylab/af3_vs_1FHD_overlay.png</code></p>
+              </div>
+            </div>
+            <div class="figure-panel">
+              <div class="placeholder-block">
+                <div class="placeholder-icon" aria-hidden="true">📈</div>
+                <strong>Figure: Per-residue RMSD deviation plot</strong>
+                <p>Cα deviation (Å) plotted by residue number. Expected pattern: low RMSD in structured core, higher in loop regions.</p>
+                <p class="figure-note">Add matplotlib/pymol figure: <code>figures/drylab/per_residue_rmsd.png</code></p>
+              </div>
+            </div>
+          </div>
+
+          <h4>pLDDT confidence summary</h4>
+          <table class="data-table">
+            <thead>
+              <tr><th>Region</th><th>pLDDT range</th><th>Interpretation</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>GH10 catalytic core (incl. GLU127, GLU233)</td><td class="mono">&gt;90</td><td>Very high confidence — active-site geometry reliable</td></tr>
+              <tr><td>GH10 surface loops</td><td class="mono">75–90</td><td>High confidence</td></tr>
+              <tr><td>GH1-fold catalytic core (incl. GLU350, GLU404)</td><td class="mono">&gt;85</td><td>High confidence</td></tr>
+              <tr><td>Inter-domain linker</td><td class="mono">60–75</td><td>Moderate — expected (intrinsically flexible region)</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout">
+            <p class="callout-title">Interpretation</p>
+            <p>
+              An RMSD of 0.293 Å is strong evidence that AlphaFold3 has correctly predicted
+              the active-site geometry of the GH10/Cex domain. This validates the use of
+              the AlphaFold3 model as the receptor for docking studies (DL-R2). The
+              analogous validation for GH1 is limited by the absence of a comparable
+              published crystal structure for the CxnA GH1-fold domain; confidence in the
+              GH1 predictions is therefore based on pLDDT alone.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── DL-R2: Docking GH10 ─── -->
+      <div class="result-block" id="drylab-gh10">
+        <div class="result-header">
+          <div class="result-id">DL-R2</div>
+          <div>
+            <h3>Cellobiose docking into GH10/Cex active site (Project B)</h3>
+            <div class="result-meta">
+              <span class="badge badge--confirmed">Confirmed</span>
+              <span class="result-method">Methods: <a href={`${b}/methods#drylab`}>DL-3, DL-4, DL-5</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="result-body">
+          <p>
+            Autodock Vina docking of cellobiose into the GH10/Cex active site yielded
+            consistent, well-converged poses. PLIP analysis of the top-ranked pose
+            identified hydrogen-bond contacts with the established catalytic residues
+            GLU127 and GLU233, consistent with the expected binding geometry for a GH10
+            exoglucanase substrate.
+          </p>
+
+          <div class="key-finding">
+            <div class="key-finding-label">Top Pose</div>
+            <div class="key-finding-value">ΔG = <span class="value-placeholder">[value]</span> kcal/mol</div>
+            <div class="key-finding-context">
+              Autodock Vina predicted binding free energy for top-ranked cellobiose pose in GH10/Cex.
+              Note: absolute values are semi-empirical estimates — see DL-R4 for caveat and xylobiose comparison.
+            </div>
+          </div>
+
+          <div class="figure-block figure-block--3">
+            <div class="figure-panel">
+              <div class="placeholder-block">
+                <div class="placeholder-icon" aria-hidden="true">🔬</div>
+                <strong>Figure: GH10 top docking pose</strong>
+                <p>Cellobiose (sticks) in GH10/Cex active site (cartoon). GLU127 and GLU233 shown as sticks.</p>
+                <p class="figure-note"><code>figures/drylab/gh10_cellobiose_top_pose.png</code></p>
+              </div>
+            </div>
+            <div class="figure-panel">
+              <div class="placeholder-block">
+                <div class="placeholder-icon" aria-hidden="true">🗺</div>
+                <strong>Figure: PoseView 2D interaction diagram</strong>
+                <p>2D ligand-protein interaction map showing H-bond donors/acceptors, hydrophobic contacts.</p>
+                <p class="figure-note"><code>figures/drylab/gh10_poseview.png</code></p>
+              </div>
+            </div>
+            <div class="figure-panel">
+              <div class="placeholder-block">
+                <div class="placeholder-icon" aria-hidden="true">📊</div>
+                <strong>Figure: Pose RMSD cluster histogram</strong>
+                <p>RMSD distribution across 20 retained poses. Expected: tight clustering (&lt;2 Å) indicating convergence.</p>
+                <p class="figure-note"><code>figures/drylab/gh10_pose_cluster.png</code></p>
+              </div>
+            </div>
+          </div>
+
+          <h4>GH10 PLIP interaction summary</h4>
+          <table class="data-table">
+            <thead>
+              <tr><th>Residue</th><th>Interaction type</th><th>Ligand atom</th><th>Distance (Å)</th><th>Role</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="mono">GLU127</td><td>H-bond (donor)</td><td>O3 cellobiose</td><td class="mono"><span class="value-placeholder">[x.xx]</span></td><td>Catalytic nucleophile</td></tr>
+              <tr><td class="mono">GLU233</td><td>H-bond (acceptor)</td><td>O1 cellobiose</td><td class="mono"><span class="value-placeholder">[x.xx]</span></td><td>Acid/base catalyst</td></tr>
+              <tr><td class="mono">[additional residues]</td><td>Hydrophobic</td><td>–</td><td class="mono"><span class="value-placeholder">[x.xx]</span></td><td>Binding stabilisation</td></tr>
+            </tbody>
+          </table>
+          <p class="table-note">Full PLIP output file: <code>data/drylab/gh10_cellobiose_plip.txt</code> (to be added to GitHub repo)</p>
+        </div>
+      </div>
+
+      <!-- ─── DL-R3: Docking GH1 ─── -->
+      <div class="result-block" id="drylab-gh1">
+        <div class="result-header">
+          <div class="result-id">DL-R3</div>
+          <div>
+            <h3>Cellobiose docking into GH1-fold active site (Project A)</h3>
+            <div class="result-meta">
+              <span class="badge badge--confirmed">Confirmed</span>
+              <span class="result-method">Methods: <a href={`${b}/methods#drylab`}>DL-3, DL-4, DL-5</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="result-body">
+          <p>
+            Cellobiose was docked into the GH1-fold domain of CxnA (the Project A target).
+            The docking results differ significantly from GH10, with important implications
+            for the directed evolution strategy.
+          </p>
+
+          <div class="key-finding key-finding--warn">
+            <div class="key-finding-label">Steric barrier identified</div>
+            <div class="key-finding-value">GLN87 &amp; TRP281</div>
+            <div class="key-finding-context">
+              These two residues form a steric barrier limiting cellobiose access to the
+              candidate active-site pocket (GLU350/GLU404). This is a key finding for
+              Project A: directed evolution may need to modify or displace these residues
+              to permit productive substrate binding. This is a hypothesis, not a proven
+              requirement.
+            </div>
+          </div>
+
+          <div class="figure-block">
+            <div class="figure-panel">
+              <div class="placeholder-block">
+                <div class="placeholder-icon" aria-hidden="true">🔬</div>
+                <strong>Figure: GH1 docking poses (all 20 retained)</strong>
+                <p>All 20 cellobiose poses shown in GH1 active site. Scattered distribution indicates ambiguous binding.</p>
+                <p class="figure-note"><code>figures/drylab/gh1_cellobiose_all_poses.png</code></p>
+              </div>
+            </div>
+            <div class="figure-panel">
+              <div class="placeholder-block">
+                <div class="placeholder-icon" aria-hidden="true">🚧</div>
+                <strong>Figure: GLN87/TRP281 steric barrier</strong>
+                <p>Surface representation showing GLN87 and TRP281 blocking the candidate binding pocket relative to GLU350/GLU404.</p>
+                <p class="figure-note"><code>figures/drylab/gh1_steric_barrier.png</code></p>
+              </div>
+            </div>
+          </div>
+
+          <h4>GH1 PLIP interaction summary (top pose)</h4>
+          <table class="data-table">
+            <thead>
+              <tr><th>Residue</th><th>Interaction type</th><th>Ligand atom</th><th>Role / Note</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="mono">GLU350</td><td>H-bond (tentative)</td><td>O cellobiose</td><td>Candidate catalytic nucleophile — weak contact</td></tr>
+              <tr><td class="mono">GLU404</td><td>H-bond (tentative)</td><td>O cellobiose</td><td>Candidate acid/base — weak contact</td></tr>
+              <tr><td class="mono">GLN87</td><td>Steric clash</td><td>Multiple</td><td><strong>Barrier residue</strong> — partially blocks active-site access</td></tr>
+              <tr><td class="mono">TRP281</td><td>Hydrophobic block</td><td>–</td><td><strong>Barrier residue</strong> — hydrophobic bulk limits cellobiose accommodation</td></tr>
+            </tbody>
+          </table>
+
+          <div class="callout callout--warn">
+            <p class="callout-title">Honest interpretation — what this does and does not tell us</p>
+            <p>
+              The GH1 docking results <strong>do not</strong> demonstrate that the GH1-fold
+              domain of CxnA is incapable of binding cellobiose, nor do they prove it is
+              capable. They identify structural features that computational methods suggest
+              may impede binding. Whether those features are actually barriers to activity —
+              and whether directed evolution can overcome them — is an empirical question that
+              only wet-lab experiments can answer. The steric barrier finding guides but does
+              not constrain the epPCR targeting strategy.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── DL-R4: Docking Caveat / Xylobiose ─── -->
+      <div class="result-block" id="drylab-docking">
+        <div class="result-header">
+          <div class="result-id">DL-R4</div>
+          <div>
+            <h3>Docking score caveat: xylobiose ΔG comparison</h3>
+            <div class="result-meta">
+              <span class="badge badge--confirmed">Confirmed</span>
+              <span class="result-method">Methods: <a href={`${b}/methods#drylab`}>DL-3</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="result-body">
+          <p>
+            Xylobiose (a xylose dimer analogous in structure to cellobiose) was docked into
+            the GH10/Cex active site as a comparative substrate. This experiment serves as
+            an explicit test of docking score interpretability.
+          </p>
+
+          <div class="key-finding key-finding--warn">
+            <div class="key-finding-label">Caveat demonstrated</div>
+            <div class="key-finding-value">Xylobiose score &gt; cellobiose score</div>
+            <div class="key-finding-context">
+              Autodock Vina predicts xylobiose binds with a more favourable ΔG than cellobiose
+              in GH10/Cex — despite cellobiose being the natural substrate. This demonstrates
+              that absolute Vina scores overestimate or misrank binding affinity and must not be
+              used as direct substitutes for experimental ΔG measurements.
+            </div>
+          </div>
+
+          <div class="figure-block">
+            <div class="figure-panel">
+              <div class="placeholder-block">
+                <div class="placeholder-icon" aria-hidden="true">📊</div>
+                <strong>Figure: Cellobiose vs xylobiose Vina scores in GH10</strong>
+                <p>Bar chart comparing top-pose Vina ΔG for cellobiose vs xylobiose. Illustrates score unreliability for substrate identity.</p>
+                <p class="figure-note"><code>figures/drylab/cellobiose_vs_xylobiose_scores.png</code></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout callout--warn">
+            <p class="callout-title">Methodological note — all Vina scores on this site</p>
+            <p>
+              Throughout this project, Autodock Vina scores are used only for within-receptor,
+              within-ligand pose ranking and convergence assessment. They are not used to draw
+              conclusions about whether one substrate is preferred over another, nor to predict
+              absolute affinity values. All such conclusions require experimental validation.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── DL-R5: Pose Convergence ─── -->
+      <div class="result-block" id="drylab-convergence">
+        <div class="result-header">
+          <div class="result-id">DL-R5</div>
+          <div>
+            <h3>Pose convergence analysis: GH10 vs GH1</h3>
+            <div class="result-meta">
+              <span class="badge badge--confirmed">Confirmed</span>
+              <span class="result-method">Methods: <a href={`${b}/methods#drylab`}>DL-5</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="result-body">
+          <p>
+            Pose convergence was assessed by clustering all 20 retained docking poses per
+            target by pairwise RMSD (cutoff 2.0 Å). The GH10 and GH1 results show
+            strikingly different patterns.
+          </p>
+
+          <div class="convergence-compare">
+            <div class="convergence-item convergence-item--good">
+              <div class="convergence-label">GH10 / Cex</div>
+              <div class="convergence-status"><span class="badge badge--confirmed">Tight convergence</span></div>
+              <p>
+                The majority of the 20 poses cluster within 2 Å RMSD of the top-ranked pose.
+                This indicates that Autodock Vina consistently identifies the same binding
+                geometry, supporting high confidence in the predicted GH10–cellobiose binding
+                mode and the PLIP analysis based on it.
+              </p>
+              <div class="placeholder-block mt-4" style="padding:var(--sp-4)">
+                <div class="placeholder-icon" aria-hidden="true">📊</div>
+                <strong>Figure: GH10 pose RMSD histogram</strong>
+                <p class="figure-note"><code>figures/drylab/gh10_pose_convergence.png</code></p>
+              </div>
+            </div>
+
+            <div class="convergence-item convergence-item--warn">
+              <div class="convergence-label">GH1-fold</div>
+              <div class="convergence-status"><span class="badge badge--progress">Scattered — investigation ongoing</span></div>
+              <p>
+                GH1 poses are distributed across multiple clusters with no dominant pose.
+                This indicates that Autodock Vina does not identify a clear, preferred binding
+                site for cellobiose in the GH1-fold domain, consistent with the absence of
+                a pre-formed binding pocket in the wild-type structure.
+              </p>
+              <p class="mt-4">
+                <strong>This result is not over-interpreted.</strong> Pose scatter does not
+                prove that GH1 cannot bind cellobiose — it indicates computational ambiguity.
+                It is flagged as an open question and a motivation for the directed evolution
+                approach: if structural changes in the binding pocket are needed, directed
+                evolution may identify them.
+              </p>
+              <div class="placeholder-block mt-4" style="padding:var(--sp-4)">
+                <div class="placeholder-icon" aria-hidden="true">📊</div>
+                <strong>Figure: GH1 pose RMSD histogram</strong>
+                <p class="figure-note"><code>figures/drylab/gh1_pose_convergence.png</code></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── DL-R6: PLIP summary ─── -->
+      <div class="result-block" id="drylab-plip">
+        <div class="result-header">
+          <div class="result-id">DL-R6</div>
+          <div>
+            <h3>Full PLIP interaction tables</h3>
+            <div class="result-meta">
+              <span class="badge badge--confirmed">Confirmed</span>
+              <span class="result-method">Methods: <a href={`${b}/methods#drylab`}>DL-4</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="result-body">
+          <h4>GH10 — Cellobiose interactions (top pose)</h4>
+          <table class="data-table">
+            <thead>
+              <tr><th>Interaction</th><th>Protein residue</th><th>Ligand atom</th><th>Distance (Å)</th><th>Angle (°)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>H-bond</td><td class="mono">GLU127</td><td>O3</td><td class="mono value-placeholder">[x.xx]</td><td class="mono value-placeholder">[xxx]</td></tr>
+              <tr><td>H-bond</td><td class="mono">GLU233</td><td>O1</td><td class="mono value-placeholder">[x.xx]</td><td class="mono value-placeholder">[xxx]</td></tr>
+              <tr><td>Hydrophobic</td><td class="mono">[residue]</td><td>–</td><td class="mono value-placeholder">[x.xx]</td><td>–</td></tr>
+            </tbody>
+          </table>
+          <p class="table-note">Full PLIP report: <code>data/drylab/gh10_cellobiose_plip_full.txt</code></p>
+
+          <h4 class="mt-6">GH1 — Cellobiose interactions (top pose)</h4>
+          <table class="data-table">
+            <thead>
+              <tr><th>Interaction</th><th>Protein residue</th><th>Ligand atom</th><th>Distance (Å)</th><th>Note</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>H-bond (weak)</td><td class="mono">GLU350</td><td>O</td><td class="mono value-placeholder">[x.xx]</td><td>Candidate nucleophile</td></tr>
+              <tr><td>H-bond (weak)</td><td class="mono">GLU404</td><td>O</td><td class="mono value-placeholder">[x.xx]</td><td>Candidate acid/base</td></tr>
+              <tr><td>Steric clash</td><td class="mono">GLN87</td><td>Multiple</td><td class="mono value-placeholder">[x.xx]</td><td>Barrier residue</td></tr>
+              <tr><td>Hydrophobic block</td><td class="mono">TRP281</td><td>–</td><td class="mono value-placeholder">[x.xx]</td><td>Barrier residue</td></tr>
+            </tbody>
+          </table>
+          <p class="table-note">Full PLIP report: <code>data/drylab/gh1_cellobiose_plip_full.txt</code></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- ═══ WET LAB RESULTS (PLACEHOLDERS) ════════════════════ -->
+  <!-- ══════════════════════════════════════════════════════ -->
+
+  <section class="section section--alt" id="wetlab" aria-labelledby="wetlab-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Experimental results</p>
+        <h2 id="wetlab-heading">Wet Lab — Results (in progress)</h2>
+        <p>
+          These sections are structured identically to the completed dry-lab results above.
+          Data will be entered as experiments complete. No placeholder data or fabricated
+          values appear here.
+        </p>
+      </div>
+
+      <!-- WL-R1: Cloning -->
+      <div class="result-block" id="wetlab-cloning">
+        <div class="result-header">
+          <div class="result-id">WL-R1</div>
+          <div>
+            <h3>CxnA cloning verification</h3>
+            <div class="result-meta">
+              <span class="badge badge--progress">In Progress</span>
+              <span class="result-method">Methods: <a href={`${b}/methods#wetlab`}>WL-1</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="result-body">
+          <div class="figure-block">
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">🧬</div>
+                <strong>Gel image: restriction digestion verification</strong>
+                <p>Expected: insert band at [x] bp, vector backbone at [y] bp. Undigested and ladder controls.</p>
+                <p class="pending-label">Result pending — expected: cloning phase</p>
+              </div>
+            </div>
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">🔬</div>
+                <strong>Gel image: colony PCR confirmation</strong>
+                <p>Colony PCR of transformants with T7 primers to confirm correct insert size.</p>
+                <p class="pending-label">Result pending — expected: cloning phase</p>
+              </div>
+            </div>
+          </div>
+          <div class="placeholder-block pending-block mt-4">
+            <div class="placeholder-icon" aria-hidden="true">🧾</div>
+            <strong>Table: Sanger sequencing results</strong>
+            <p>Alignment of 3–5 sequenced clones vs reference CxnA sequence. Identity %, any discrepancies noted.</p>
+            <p class="pending-label">Result pending — expected: cloning phase</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- WL-R2: epPCR library -->
+      <div class="result-block" id="wetlab-eppcr">
+        <div class="result-header">
+          <div class="result-id">WL-R2</div>
+          <div>
+            <h3>epPCR library characterisation</h3>
+            <div class="result-meta">
+              <span class="badge badge--progress">In Progress</span>
+              <span class="result-method">Methods: <a href={`${b}/methods#wetlab`}>WL-2</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="result-body">
+          <div class="figure-block figure-block--3">
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">🧫</div>
+                <strong>Plate image: library diversity plate</strong>
+                <p>Representative plate image showing colony density from library transformation.</p>
+                <p class="pending-label">Result pending — expected: mutagenesis phase</p>
+              </div>
+            </div>
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">📊</div>
+                <strong>Chart: mutation rate distribution</strong>
+                <p>Mutations per gene across 10 randomly sequenced clones. Target: 1–4 bp substitutions. Acceptance criterion noted.</p>
+                <p class="pending-label">Result pending — expected: mutagenesis phase</p>
+              </div>
+            </div>
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">📋</div>
+                <strong>Table: mutation spectra</strong>
+                <p>Transitions vs transversions, positional distribution. Check for expected Mn²⁺-bias mutation pattern.</p>
+                <p class="pending-label">Result pending — expected: mutagenesis phase</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WL-R3: Selection -->
+      <div class="result-block" id="wetlab-selection">
+        <div class="result-header">
+          <div class="result-id">WL-R3</div>
+          <div>
+            <h3>Primary selection outcomes</h3>
+            <div class="result-meta">
+              <span class="badge badge--progress">In Progress</span>
+              <span class="result-method">Methods: <a href={`${b}/methods#wetlab`}>WL-4</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="result-body">
+          <div class="figure-block">
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">🧫</div>
+                <strong>Project A: Cellobiose selection plates</strong>
+                <p>M9 + cellobiose plates after [x] days. Colony count vs empty-vector negative control. Growth-positive colonies identified.</p>
+                <p class="pending-label">Result pending — expected: selection phase</p>
+              </div>
+            </div>
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">🧫</div>
+                <strong>Project B: CMC plate clearing</strong>
+                <p>Congo Red-stained CMC plates. Halo diameters for WT CxnA (positive control) and library variants. Enhanced variants indicated.</p>
+                <p class="pending-label">Result pending — expected: selection phase</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WL-R4: Fluorogenic assays -->
+      <div class="result-block" id="wetlab-assays">
+        <div class="result-header">
+          <div class="result-id">WL-R4</div>
+          <div>
+            <h3>MUG / MUC / CMC fluorescence assay results</h3>
+            <div class="result-meta">
+              <span class="badge badge--pending">Pending</span>
+              <span class="result-method">Methods: <a href={`${b}/methods#wetlab`}>WL-5</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="result-body">
+          <div class="figure-block figure-block--3">
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">📉</div>
+                <strong>MUG standard curve</strong>
+                <p>4-MU fluorescence (RFU) vs concentration (µM). R² and equation used for all MUG calculations.</p>
+                <p class="pending-label">Result pending — expected: screening phase</p>
+              </div>
+            </div>
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">📊</div>
+                <strong>MUG activity: library hits vs WT</strong>
+                <p>Bar chart: MUG activity (nmol 4-MU/min/mg protein) for each hit colony vs WT CxnA baseline. Fold-improvement labeled.</p>
+                <p class="pending-label">Result pending — expected: screening phase</p>
+              </div>
+            </div>
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">📊</div>
+                <strong>MUC activity: exoglucanase screen</strong>
+                <p>MUC activity for Project B candidates vs WT CxnA. Hits with &gt;1.5× WT activity flagged for validation.</p>
+                <p class="pending-label">Result pending — expected: screening phase</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WL-R5: Hit validation -->
+      <div class="result-block">
+        <div class="result-header">
+          <div class="result-id">WL-R5</div>
+          <div>
+            <h3>Hit sequencing &amp; final mutant characterisation</h3>
+            <div class="result-meta">
+              <span class="badge badge--pending">Pending</span>
+              <span class="result-method">Methods: <a href={`${b}/methods#wetlab`}>WL-6</a></span>
+            </div>
+          </div>
+        </div>
+        <div class="result-body">
+          <div class="figure-block">
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">🧬</div>
+                <strong>Table: Confirmed mutations in validated hits</strong>
+                <p>Sanger sequencing results for all confirmed hits. Amino acid changes, positions, and domain locations. Comparison to PLIP-predicted key residues.</p>
+                <p class="pending-label">Result pending — expected: validation phase</p>
+              </div>
+            </div>
+            <div class="figure-panel">
+              <div class="placeholder-block pending-block">
+                <div class="placeholder-icon" aria-hidden="true">📊</div>
+                <strong>Chart: Specific activity — mutants vs WT CxnA</strong>
+                <p>Purified enzyme specific activity (nmol/min/mg) for MUG, MUC, and CMC-DNS assays. Fold improvement over WT baseline for each confirmed mutant.</p>
+                <p class="pending-label">Result pending — expected: validation phase</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ REFERENCES ═══ -->
+  <section class="section" id="references" aria-labelledby="refs-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Bibliography</p>
+        <h2 id="refs-heading">Full reference list</h2>
+        <p>All sources cited across the project website.</p>
+      </div>
+
+      <ol class="ref-list">
+        <li id="ref-duedu">
+          Duedu, K.O. &amp; French, C.E. (2016). Characterization of a bifunctional cellulase CxnA
+          from <em>Cellulomonas fimi</em>. <em>Enzyme and Microbial Technology</em>.
+          University of Edinburgh.
+          [DOI to be added]
+        </li>
+        <li id="ref-liu-full">
+          Liu, G. et al. (2018). Functional and structural characterization of a GH1 family
+          beta-glucosidase and its role in biomass degradation.
+          <em>Biotechnology for Biofuels</em>.
+          [DOI to be added]
+        </li>
+        <li id="ref-notenboom">
+          Notenboom, V., Birsan, C., Warren, R.A.J., Withers, S.G. &amp; Rose, D.R. (1998).
+          Exploring the cellulose/xylan specificity of the β-1,4-glycanase Cex from
+          <em>Cellulomonas fimi</em> through crystallography and mutation.
+          <em>Biochemistry</em>, 37(14), 4751–4758.
+          PDB: 1FHD.
+          <a href="https://doi.org/10.1021/bi9729081" target="_blank" rel="noopener">doi:10.1021/bi9729081</a>
+        </li>
+        <li>
+          Notenboom, V. et al. (2000). Crystal structures of the family 10 xylanase from
+          <em>Streptomyces lividans</em> and related Cex structures.
+          <em>Biochemistry</em>.
+          [DOI to be added]
+        </li>
+        <li>
+          Adasme, M.F. et al. (2021). PLIP 2021: expanding the scope of the protein–ligand
+          interaction profiler to DNA and RNA.
+          <em>Nucleic Acids Research</em>, 49(W1), W530–W534.
+          <a href="https://doi.org/10.1093/nar/gkab294" target="_blank" rel="noopener">doi:10.1093/nar/gkab294</a>
+        </li>
+        <li>
+          Trott, O. &amp; Olson, A.J. (2010). AutoDock Vina: improving the speed and accuracy
+          of docking with a new scoring function, efficient optimization, and multithreading.
+          <em>Journal of Computational Chemistry</em>, 31(2), 455–461.
+          <a href="https://doi.org/10.1002/jcc.21334" target="_blank" rel="noopener">doi:10.1002/jcc.21334</a>
+        </li>
+        <li>
+          Abramson, J. et al. (2024). Accurate structure prediction of biomolecular interactions
+          with AlphaFold 3.
+          <em>Nature</em>, 630, 493–500.
+          <a href="https://doi.org/10.1038/s41586-024-07487-w" target="_blank" rel="noopener">doi:10.1038/s41586-024-07487-w</a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+
+  /* Status summary */
+  .status-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-6);
+  }
+  @media (max-width: 700px) { .status-grid { grid-template-columns: 1fr; } }
+  .status-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-5);
+  }
+  .status-card h3 { color: var(--c-secondary); margin-bottom: var(--sp-4); font-size: 1rem; }
+  .status-items { display: flex; flex-direction: column; gap: var(--sp-2); }
+  .status-item { display: flex; align-items: center; gap: var(--sp-2); font-size: 0.88rem; }
+
+  /* Result blocks */
+  .result-block {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--sp-8);
+    overflow: hidden;
+  }
+  .result-header {
+    display: flex;
+    gap: var(--sp-4);
+    align-items: flex-start;
+    padding: var(--sp-5) var(--sp-6);
+    border-bottom: 1px solid var(--c-border-light);
+    background: var(--c-surface-2);
+  }
+  .result-id {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--c-primary);
+    background: var(--c-primary-light);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    padding: 0.25em 0.6em;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .result-header h3 { color: var(--c-secondary); font-size: 1.05rem; margin-bottom: var(--sp-2); }
+  .result-meta { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+  .result-method { font-size: 0.82rem; color: var(--c-text-muted); }
+  .result-method a { color: var(--c-primary); }
+
+  .result-body {
+    padding: var(--sp-5) var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+  }
+  .result-body p { font-size: 0.93rem; }
+  .result-body h4 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--c-text-muted);
+  }
+
+  /* Key findings */
+  .key-finding {
+    background: var(--c-primary-light);
+    border: 1px solid var(--c-border);
+    border-left: 4px solid var(--c-primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    padding: var(--sp-4) var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+  .key-finding--warn {
+    background: var(--c-accent-light);
+    border-left-color: var(--c-accent);
+  }
+  .key-finding-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-primary);
+  }
+  .key-finding--warn .key-finding-label { color: var(--c-accent); }
+  .key-finding-value { font-size: 1.35rem; font-weight: 700; color: var(--c-secondary); }
+  .key-finding-context { font-size: 0.88rem; color: var(--c-text-muted); max-width: none; }
+
+  /* Figure blocks */
+  .figure-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-4);
+  }
+  .figure-block--3 { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 800px) {
+    .figure-block { grid-template-columns: 1fr; }
+    .figure-block--3 { grid-template-columns: 1fr; }
+  }
+
+  .figure-panel { min-height: 0; }
+  .figure-note {
+    font-size: 0.75rem;
+    color: var(--c-text-faint);
+    font-style: italic;
+    margin-top: var(--sp-2);
+    max-width: none;
+  }
+  .figure-note code { font-size: 0.75rem; }
+
+  /* Pending blocks */
+  .pending-block {
+    border-color: var(--c-accent);
+    border-style: dashed;
+  }
+  .pending-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--c-accent);
+    background: var(--c-accent-light);
+    border-radius: var(--radius-sm);
+    padding: 0.2em 0.5em;
+    display: inline-block;
+    margin-top: var(--sp-2);
+    max-width: none;
+  }
+
+  /* Convergence comparison */
+  .convergence-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-5);
+  }
+  @media (max-width: 700px) { .convergence-compare { grid-template-columns: 1fr; } }
+  .convergence-item {
+    border-radius: var(--radius-lg);
+    padding: var(--sp-5);
+    border: 1px solid var(--c-border);
+  }
+  .convergence-item--good { background: var(--c-primary-light); border-color: var(--c-primary); }
+  .convergence-item--warn { background: var(--c-accent-light); border-color: var(--c-accent); }
+  .convergence-label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c-secondary);
+    margin-bottom: var(--sp-2);
+  }
+  .convergence-status { margin-bottom: var(--sp-3); }
+  .convergence-item p { font-size: 0.9rem; }
+
+  /* Value placeholders */
+  .value-placeholder {
+    color: var(--c-text-faint);
+    font-style: italic;
+  }
+
+  .table-note {
+    font-size: 0.78rem;
+    color: var(--c-text-faint);
+    font-style: italic;
+  }
+  .table-note code { font-size: 0.75rem; }
+</style>

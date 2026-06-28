@@ -1,0 +1,686 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<BaseLayout
+  title="Methods — TriCel CxnA | iDEC 2025"
+  description="Full methods for the CxnA directed evolution project: AlphaFold3, Autodock Vina, PLIP analysis, cloning, error-prone PCR, selection, and enzyme assays."
+>
+
+  <!-- ═══ PAGE HERO ═══ -->
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">Methods</p>
+      <h1>Dry lab &amp; wet lab methodology</h1>
+      <p>
+        Complete protocols for both the computational structural analysis and the molecular
+        biology experiments. Every method links directly to the relevant results.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ WORKFLOW OVERVIEW ═══ -->
+  <section class="section section--alt" aria-labelledby="workflow-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Project workflow</p>
+        <h2 id="workflow-heading">Dry lab guides wet lab — wet lab validates dry lab</h2>
+        <p>
+          Both tracks run in parallel and inform each other. Structural predictions guide
+          which mutations to target; wet-lab results test whether those predictions hold.
+        </p>
+      </div>
+
+      <!-- Pipeline SVG -->
+      <figure class="pipeline-figure" aria-labelledby="pipeline-svg-title">
+        <svg viewBox="0 0 780 340" xmlns="http://www.w3.org/2000/svg" class="pipeline-svg" aria-labelledby="pipeline-svg-title">
+          <title id="pipeline-svg-title">Project workflow: dry lab AlphaFold3 and docking track feeds into wet lab mutagenesis, selection, and screening track</title>
+          <defs>
+            <marker id="pa" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#1a6648"/>
+            </marker>
+            <marker id="pb" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#c9862a"/>
+            </marker>
+            <marker id="pc" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#475569"/>
+            </marker>
+          </defs>
+
+          <!-- Track labels -->
+          <text x="10" y="60" font-size="11" fill="#1a6648" font-family="system-ui,sans-serif" font-weight="700">DRY LAB</text>
+          <text x="10" y="210" font-size="11" fill="#c9862a" font-family="system-ui,sans-serif" font-weight="700">WET LAB</text>
+
+          <!-- Dry lab track -->
+          <rect x="50" y="72" width="120" height="56" rx="8" fill="#1a6648"/>
+          <text x="110" y="97" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">AlphaFold3</text>
+          <text x="110" y="112" text-anchor="middle" font-size="9" fill="#a8d5bc" font-family="system-ui,sans-serif">Structure prediction</text>
+          <text x="110" y="124" text-anchor="middle" font-size="8.5" fill="#7ec9a6" font-family="system-ui,sans-serif">GH10 + GH1</text>
+
+          <path d="M170,100 L198,100" stroke="#1a6648" stroke-width="2" marker-end="url(#pa)" fill="none"/>
+
+          <rect x="200" y="72" width="120" height="56" rx="8" fill="#1a6648"/>
+          <text x="260" y="97" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">RMSD Validation</text>
+          <text x="260" y="112" text-anchor="middle" font-size="9" fill="#a8d5bc" font-family="system-ui,sans-serif">vs 1FHD crystal</text>
+          <text x="260" y="124" text-anchor="middle" font-size="8.5" fill="#7ec9a6" font-family="system-ui,sans-serif">0.293 Å ✓</text>
+
+          <path d="M320,100 L348,100" stroke="#1a6648" stroke-width="2" marker-end="url(#pa)" fill="none"/>
+
+          <rect x="350" y="72" width="120" height="56" rx="8" fill="#1a6648"/>
+          <text x="410" y="97" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Autodock Vina</text>
+          <text x="410" y="112" text-anchor="middle" font-size="9" fill="#a8d5bc" font-family="system-ui,sans-serif">Cellobiose docking</text>
+          <text x="410" y="124" text-anchor="middle" font-size="8.5" fill="#7ec9a6" font-family="system-ui,sans-serif">GH10 + GH1</text>
+
+          <path d="M470,100 L498,100" stroke="#1a6648" stroke-width="2" marker-end="url(#pa)" fill="none"/>
+
+          <rect x="500" y="72" width="120" height="56" rx="8" fill="#1a6648"/>
+          <text x="560" y="97" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">PLIP / PoseView</text>
+          <text x="560" y="112" text-anchor="middle" font-size="9" fill="#a8d5bc" font-family="system-ui,sans-serif">Interaction analysis</text>
+          <text x="560" y="124" text-anchor="middle" font-size="8.5" fill="#7ec9a6" font-family="system-ui,sans-serif">Residue contacts</text>
+
+          <!-- Dry→Wet guidance arrow -->
+          <path d="M560,128 Q560,180 400,200" stroke="#475569" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#pc)"/>
+          <text x="510" y="172" font-size="9" fill="#475569" font-family="system-ui,sans-serif" font-style="italic">guides targeting</text>
+
+          <!-- Wet lab track -->
+          <rect x="50" y="220" width="120" height="56" rx="8" fill="#7a3a08" stroke="#c9862a" stroke-width="1.5"/>
+          <text x="110" y="245" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">CxnA Cloning</text>
+          <text x="110" y="260" text-anchor="middle" font-size="9" fill="#f0c070" font-family="system-ui,sans-serif">Into expression</text>
+          <text x="110" y="272" text-anchor="middle" font-size="8.5" fill="#f0c070" font-family="system-ui,sans-serif">vector</text>
+
+          <path d="M170,248 L198,248" stroke="#c9862a" stroke-width="2" marker-end="url(#pb)" fill="none"/>
+
+          <rect x="200" y="220" width="120" height="56" rx="8" fill="#7a3a08" stroke="#c9862a" stroke-width="1.5"/>
+          <text x="260" y="245" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">epPCR Library</text>
+          <text x="260" y="260" text-anchor="middle" font-size="9" fill="#f0c070" font-family="system-ui,sans-serif">Random mutagenesis</text>
+          <text x="260" y="272" text-anchor="middle" font-size="8.5" fill="#f0c070" font-family="system-ui,sans-serif">103–104 variants</text>
+
+          <path d="M320,248 L348,248" stroke="#c9862a" stroke-width="2" marker-end="url(#pb)" fill="none"/>
+
+          <rect x="350" y="220" width="120" height="56" rx="8" fill="#7a3a08" stroke="#c9862a" stroke-width="1.5"/>
+          <text x="410" y="245" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Selection</text>
+          <text x="410" y="260" text-anchor="middle" font-size="9" fill="#f0c070" font-family="system-ui,sans-serif">Cellobiose plates</text>
+          <text x="410" y="272" text-anchor="middle" font-size="8.5" fill="#f0c070" font-family="system-ui,sans-serif">CMC clearing</text>
+
+          <path d="M470,248 L498,248" stroke="#c9862a" stroke-width="2" marker-end="url(#pb)" fill="none"/>
+
+          <rect x="500" y="220" width="120" height="56" rx="8" fill="#7a3a08" stroke="#c9862a" stroke-width="1.5"/>
+          <text x="560" y="245" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Screening</text>
+          <text x="560" y="260" text-anchor="middle" font-size="9" fill="#f0c070" font-family="system-ui,sans-serif">MUG / MUC / CMC</text>
+          <text x="560" y="272" text-anchor="middle" font-size="8.5" fill="#f0c070" font-family="system-ui,sans-serif">Fluorescence assay</text>
+
+          <path d="M620,248 L648,248" stroke="#c9862a" stroke-width="2" marker-end="url(#pb)" fill="none"/>
+
+          <rect x="650" y="220" width="120" height="56" rx="8" fill="#7a3a08" stroke="#c9862a" stroke-width="1.5"/>
+          <text x="710" y="245" text-anchor="middle" font-size="10" fill="white" font-family="system-ui,sans-serif" font-weight="600">Sequencing</text>
+          <text x="710" y="260" text-anchor="middle" font-size="9" fill="#f0c070" font-family="system-ui,sans-serif">Hit characterisation</text>
+          <text x="710" y="272" text-anchor="middle" font-size="8.5" fill="#f0c070" font-family="system-ui,sans-serif">Mutation ID</text>
+
+          <!-- Wet→Dry validation arrow -->
+          <path d="M560,220 Q560,168 620,145" stroke="#475569" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#pc)"/>
+          <text x="600" y="192" font-size="9" fill="#475569" font-family="system-ui,sans-serif" font-style="italic">validates</text>
+
+          <!-- Status badges -->
+          <rect x="50" y="295" width="68" height="18" rx="4" fill="#dcfce7"/>
+          <text x="84" y="308" text-anchor="middle" font-size="8.5" fill="#15803d" font-family="system-ui,sans-serif" font-weight="700">● CONFIRMED</text>
+          <rect x="128" y="295" width="68" height="18" rx="4" fill="#fef3c7"/>
+          <text x="162" y="308" text-anchor="middle" font-size="8.5" fill="#b45309" font-family="system-ui,sans-serif" font-weight="700">● IN PROGRESS</text>
+          <rect x="206" y="295" width="52" height="18" rx="4" fill="#f1f5f9"/>
+          <text x="232" y="308" text-anchor="middle" font-size="8.5" fill="#475569" font-family="system-ui,sans-serif" font-weight="700">● PENDING</text>
+        </svg>
+        <figcaption>Project workflow: dry-lab structural analysis guides wet-lab mutagenesis targeting; wet-lab results validate computational predictions. Both tracks are ongoing.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ═══ DRY LAB ═══ -->
+  <section class="section" id="drylab" aria-labelledby="drylab-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Computational methods</p>
+        <h2 id="drylab-heading">Dry lab: structural prediction and docking</h2>
+      </div>
+
+      <div class="method-block">
+        <div class="method-header">
+          <div class="method-num">DL-1</div>
+          <div>
+            <h3>AlphaFold3 structure prediction</h3>
+            <div class="method-status-row">
+              <span class="badge badge--confirmed">Confirmed</span>
+              <a href={`${b}/results#drylab-structure`} class="method-link">View results →</a>
+            </div>
+          </div>
+        </div>
+        <div class="method-body">
+          <p>
+            Full-length CxnA protein structure was predicted using
+            <strong>AlphaFold3</strong> (Google DeepMind, 2024) via the publicly accessible
+            AlphaFold Server. Separate predictions were run for the GH10/Cex catalytic domain
+            and the GH1-fold domain to obtain higher-resolution models of each active site.
+          </p>
+          <h4>Parameters</h4>
+          <ul class="param-list">
+            <li><strong>Input:</strong> CxnA amino acid sequence (full-length; domain boundaries as per Duedu &amp; French 2016)</li>
+            <li><strong>Model version:</strong> AlphaFold3 (server, accessed 2025)</li>
+            <li><strong>Templates:</strong> Used where available (default server settings)</li>
+            <li><strong>Number of recycles:</strong> Default (3)</li>
+            <li><strong>Output:</strong> mmCIF structure files, pLDDT confidence scores, PAE (Predicted Aligned Error) matrix</li>
+          </ul>
+          <h4>Output quality assessment</h4>
+          <p>
+            pLDDT scores above 90 in the catalytic core of both GH10 and GH1 domains indicate
+            high per-residue confidence. Regions connecting domains (linker segments) showed
+            lower pLDDT (60–75), consistent with expected flexibility.
+            PAE plots confirmed low inter-domain error for active-site residues.
+          </p>
+          <details class="expand mt-4">
+            <summary>Note on AlphaFold3 vs AlphaFold2 for this application</summary>
+            <div class="expand-body">
+              <p>
+                AlphaFold3 was selected over AlphaFold2 for its improved modelling of
+                ligand-binding pockets and multi-chain assemblies. For the purposes of
+                structure validation and docking grid preparation, the single-chain prediction
+                is sufficient. AlphaFold3 predictions should be treated as computational
+                models, not experimental structures — hence the RMSD validation against 1FHD
+                (Method DL-2) as a critical quality check before proceeding to docking.
+              </p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <div class="method-header">
+          <div class="method-num">DL-2</div>
+          <div>
+            <h3>Structural validation: RMSD against 1FHD crystal structure</h3>
+            <div class="method-status-row">
+              <span class="badge badge--confirmed">Confirmed</span>
+              <a href={`${b}/results#drylab-structure`} class="method-link">View results →</a>
+            </div>
+          </div>
+        </div>
+        <div class="method-body">
+          <p>
+            To assess the accuracy of the AlphaFold3 GH10/Cex model, it was structurally
+            superimposed against the published X-ray crystal structure of the Cex exoglucanase
+            from <em>Cellulomonas fimi</em> (PDB: <code>1FHD</code>, Notenboom et al., 1998).
+          </p>
+          <h4>Alignment procedure</h4>
+          <ul class="param-list">
+            <li><strong>Tool:</strong> PyMOL v2.5 (Schrödinger) — <code>align</code> command with default parameters</li>
+            <li><strong>Alignment basis:</strong> Cα atoms of the GH10 catalytic domain, residues <span class="badge badge--pending">range pending</span></li>
+            <li><strong>Outlier removal:</strong> Standard PyMOL iterative rejection (5 cycles, 2σ cutoff)</li>
+            <li><strong>Key result:</strong> RMSD = <strong>0.293 Å</strong> over aligned Cα atoms</li>
+          </ul>
+          <div class="callout">
+            <p class="callout-title">Interpretation</p>
+            <p>
+              An RMSD of 0.293 Å is well within the range expected for near-identical
+              structures (typically &lt;1.0 Å for the same protein fold). This result gives
+              high confidence that the AlphaFold3 model accurately represents the GH10/Cex
+              active-site geometry and that downstream docking predictions are structurally
+              grounded. See <a href={`${b}/results#drylab-structure`}>Results</a> for the
+              full overlay figure and per-residue deviation plot.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <div class="method-header">
+          <div class="method-num">DL-3</div>
+          <div>
+            <h3>Molecular docking: Autodock Vina</h3>
+            <div class="method-status-row">
+              <span class="badge badge--confirmed">Confirmed</span>
+              <a href={`${b}/results#drylab-docking`} class="method-link">View results →</a>
+            </div>
+          </div>
+        </div>
+        <div class="method-body">
+          <p>
+            Cellobiose was docked into both the GH10/Cex and GH1-fold active sites using
+            <strong>Autodock Vina 1.2</strong>. Xylobiose was also docked into GH10
+            as a comparative substrate (see caveat below).
+          </p>
+          <h4>Protocol</h4>
+          <ul class="param-list">
+            <li><strong>Receptor preparation:</strong> AlphaFold3 mmCIF → PDB format. Hydrogens added using AutoDockTools 1.5.7. Water molecules removed. Gasteiger charges assigned.</li>
+            <li><strong>Ligand preparation:</strong> Cellobiose SMILES retrieved from PubChem (CID 10712). 3D conformer generated using Open Babel. Torsion bonds set free.</li>
+            <li><strong>Docking grid:</strong> Centered on the catalytic glutamates (GLU127/GLU233 for GH10; GLU350/GLU404 for GH1). Grid box: 20 × 20 × 20 Å, spacing 0.375 Å.</li>
+            <li><strong>Exhaustiveness:</strong> 32 (increased from default 8 for greater sampling)</li>
+            <li><strong>Number of poses:</strong> 20 retained per run</li>
+            <li><strong>Replicate runs:</strong> 3 per target to assess pose reproducibility</li>
+          </ul>
+
+          <div class="callout callout--warn mt-4">
+            <p class="callout-title">Critical caveat: absolute docking scores</p>
+            <p>
+              Autodock Vina binding free energy scores (kcal/mol) are semi-empirical
+              estimates and <strong>systematically overestimate true binding affinity</strong>
+              in many cases. They are reliable for rank-ordering poses of the same ligand
+              within the same receptor (relative comparison), but absolute scores should not
+              be taken as accurate predictions of experimental ΔG.
+            </p>
+            <p class="mt-4">
+              <strong>Worked example of this limitation:</strong> Docking of xylobiose into
+              GH10 yields a Vina score <span class="badge badge--pending">value pending</span> kcal/mol more favourable than cellobiose, despite
+              cellobiose being the natural substrate. This discrepancy illustrates that
+              improved docking scores do not automatically indicate biologically superior
+              substrates, and that experimental validation is always required.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <div class="method-header">
+          <div class="method-num">DL-4</div>
+          <div>
+            <h3>PLIP &amp; PoseView: interaction analysis</h3>
+            <div class="method-status-row">
+              <span class="badge badge--confirmed">Confirmed</span>
+              <a href={`${b}/results#drylab-plip`} class="method-link">View results →</a>
+            </div>
+          </div>
+        </div>
+        <div class="method-body">
+          <p>
+            Protein–ligand interactions for the top-ranked docking poses were analysed using
+            <strong>PLIP</strong> (Protein–Ligand Interaction Profiler, Adasme et al., 2021)
+            and visualised using <strong>PoseView</strong> (BioSolveIT).
+          </p>
+          <h4>Interactions characterised</h4>
+          <ul class="param-list">
+            <li>Hydrogen bonds (donor–acceptor pairs, distances, angles)</li>
+            <li>Hydrophobic contacts (Cβ–ligand distances ≤ 4.0 Å)</li>
+            <li>Stacking interactions (π–π, T-shaped)</li>
+            <li>Salt bridges (charge–charge)</li>
+          </ul>
+          <h4>Key residues identified</h4>
+          <table class="data-table mt-4">
+            <thead>
+              <tr>
+                <th>Domain</th>
+                <th>Residue</th>
+                <th>Role</th>
+                <th>Interaction type</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>GH10</td><td class="mono">GLU127</td><td>Catalytic nucleophile</td><td>H-bond (donor to ligand O3)</td></tr>
+              <tr><td>GH10</td><td class="mono">GLU233</td><td>Acid/base catalyst</td><td>H-bond (acceptor from ligand O1)</td></tr>
+              <tr><td>GH1</td><td class="mono">GLU350</td><td>Candidate nucleophile</td><td>H-bond (tentative)</td></tr>
+              <tr><td>GH1</td><td class="mono">GLU404</td><td>Candidate acid/base</td><td>H-bond (tentative)</td></tr>
+              <tr><td>GH1</td><td class="mono">GLN87</td><td>Steric barrier</td><td>Steric clash with cellobiose</td></tr>
+              <tr><td>GH1</td><td class="mono">TRP281</td><td>Steric barrier</td><td>Hydrophobic obstruction</td></tr>
+            </tbody>
+          </table>
+          <p class="mt-4" style="font-size:0.88rem;color:var(--c-text-muted)">
+            Full PLIP output, PoseView 2D diagrams, and pose cluster analysis:
+            <a href={`${b}/results#drylab-plip`}>Results → PLIP Analysis</a>.
+          </p>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <div class="method-header">
+          <div class="method-num">DL-5</div>
+          <div>
+            <h3>Pose convergence analysis</h3>
+            <div class="method-status-row">
+              <span class="badge badge--confirmed">Confirmed</span>
+              <a href={`${b}/results#drylab-convergence`} class="method-link">View results →</a>
+            </div>
+          </div>
+        </div>
+        <div class="method-body">
+          <p>
+            To assess docking reliability, the 20 retained poses per target were clustered
+            by RMSD (cutoff: 2.0 Å) to evaluate convergence. High convergence
+            (poses clustering tightly) indicates that the docking algorithm consistently
+            identifies the same binding geometry. Pose scatter indicates ambiguity.
+          </p>
+          <p class="mt-4">
+            <strong>GH10:</strong> Tight clustering of poses (see Results for RMSD distribution histogram).
+            This supports high confidence in the predicted binding geometry for downstream PLIP analysis.
+          </p>
+          <p class="mt-4">
+            <strong>GH1:</strong> Poses show greater scatter across the domain surface.
+            This is flagged as requiring further investigation — it may indicate that the
+            GH1-fold does not possess a well-defined cellobiose-binding pocket in the current
+            structural model, consistent with the absence of GH1-type activity in wild-type CxnA.
+            <strong>This result is not overclaimed.</strong> The scatter is noted as an open
+            question that wet-lab results will need to address.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WET LAB ═══ -->
+  <section class="section section--alt" id="wetlab" aria-labelledby="wetlab-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Molecular biology</p>
+        <h2 id="wetlab-heading">Wet lab: cloning, mutagenesis, selection, and screening</h2>
+      </div>
+
+      <div class="method-block">
+        <div class="method-header">
+          <div class="method-num">WL-1</div>
+          <div>
+            <h3>CxnA gene acquisition and expression vector cloning</h3>
+            <div class="method-status-row">
+              <span class="badge badge--progress">In Progress</span>
+              <a href={`${b}/results#wetlab-cloning`} class="method-link">Results (pending) →</a>
+            </div>
+          </div>
+        </div>
+        <div class="method-body">
+          <h4>Gene acquisition</h4>
+          <ul class="param-list">
+            <li><strong>Source:</strong> CxnA coding sequence from <em>Cellulomonas fimi</em> (GenBank accession per Duedu &amp; French 2016)</li>
+            <li><strong>Synthesis/source:</strong> <span class="badge badge--pending">Pending</span> <span class="pending-hint">gene synthesis provider / isolation method</span></li>
+            <li><strong>Codon optimisation:</strong> <span class="badge badge--pending">Pending</span> <span class="pending-hint">E. coli K-12 optimisation if applicable</span></li>
+          </ul>
+          <h4>Expression vector</h4>
+          <ul class="param-list">
+            <li><strong>Vector:</strong> <span class="badge badge--pending">Pending</span> <span class="pending-hint">pET / pBAD / other</span></li>
+            <li><strong>Promoter:</strong> <span class="badge badge--pending">Pending</span> <span class="pending-hint">T7 / araBAD / other</span></li>
+            <li><strong>Affinity tag:</strong> <span class="badge badge--pending">Pending</span> <span class="pending-hint">His₆ / Strep / none</span></li>
+            <li><strong>Restriction sites:</strong> <span class="badge badge--pending">Pending</span> <span class="pending-hint">e.g. NdeI/XhoI</span></li>
+            <li><strong>Host strain:</strong> <em>E. coli</em> <span class="badge badge--pending">Pending</span> <span class="pending-hint">BL21(DE3) / DH5α / other</span></li>
+          </ul>
+          <h4>Cloning procedure</h4>
+          <ul class="param-list">
+            <li>Restriction digestion of insert and vector with <span class="badge badge--pending">enzymes pending</span></li>
+            <li>Gel purification of digestion products</li>
+            <li>Ligation (T4 DNA Ligase, NEB, 16°C overnight)</li>
+            <li>Transformation into <em>E. coli</em> DH5α by heat shock</li>
+            <li>Colony PCR screening with T7 primers to confirm insert</li>
+            <li>Sanger sequencing of 3–5 positive clones to verify correct sequence</li>
+          </ul>
+          <div class="callout callout--warn mt-4">
+            <p class="callout-title">Lab notebook cross-reference</p>
+            <p>
+              All gel images, transformation efficiencies, and sequencing results for cloning
+              are recorded in the lab notebook (notebook entries to be linked here in Phase 2 of the site).
+              Includes documentation of a failed ligation attempt <span class="badge badge--pending">date TBC</span> and the
+              protocol modification that resolved it.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <div class="method-header">
+          <div class="method-num">WL-2</div>
+          <div>
+            <h3>Error-prone PCR (epPCR) mutagenesis library generation</h3>
+            <div class="method-status-row">
+              <span class="badge badge--progress">In Progress</span>
+              <a href={`${b}/results#wetlab-eppcr`} class="method-link">Results (pending) →</a>
+            </div>
+          </div>
+        </div>
+        <div class="method-body">
+          <p>
+            Error-prone PCR introduces random nucleotide substitutions at a controlled rate
+            across the target gene. We use the Mn²⁺-dNTP imbalance method to bias
+            toward a target mutation rate of approximately 1–3 amino acid changes per gene,
+            which empirically maximises the probability of finding beneficial single-site
+            and double-site mutations without excessive fitness loss from multiple deleterious changes.
+          </p>
+          <h4>epPCR protocol</h4>
+          <ul class="param-list">
+            <li><strong>Polymerase:</strong> Taq (no proofreading), 5 U/reaction</li>
+            <li><strong>Buffer:</strong> Standard Taq buffer + 0.5 mM MnCl₂</li>
+            <li><strong>dNTP imbalance:</strong> 200 µM dATP, 200 µM dGTP, 1 mM dCTP, 1 mM dTTP</li>
+            <li><strong>Template:</strong> 1 ng plasmid carrying wild-type CxnA</li>
+            <li><strong>Primers:</strong> Flanking the target region with 20-mer tails matching vector sequence</li>
+            <li><strong>Cycles:</strong> 35 cycles (94°C 30s / 55°C 30s / 72°C 90s)</li>
+            <li><strong>Library size target:</strong> ≥10³ unique colonies</li>
+          </ul>
+          <h4>Library validation</h4>
+          <ul class="param-list">
+            <li>10 random colonies sequenced to determine empirical mutation rate</li>
+            <li>Acceptance criterion: average 1–4 bp substitutions per gene</li>
+            <li>Libraries with &gt;6 bp average substitutions are discarded and repeated</li>
+          </ul>
+          <div class="callout mt-4">
+            <p class="callout-title">Project-specific targeting (informed by DL-3/DL-4)</p>
+            <p>
+              For Project A, epPCR is prioritised over the GH1-fold region (residues <span class="badge badge--pending">range pending</span>),
+              informed by the docking and PLIP analysis identifying GLU350, GLU404, GLN87, and
+              TRP281 as key positions. For Project B, epPCR covers the full GH10 domain.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <div class="method-header">
+          <div class="method-num">WL-3</div>
+          <div>
+            <h3>Library transformation and expression</h3>
+            <div class="method-status-row">
+              <span class="badge badge--progress">In Progress</span>
+            </div>
+          </div>
+        </div>
+        <div class="method-body">
+          <ul class="param-list">
+            <li><strong>Host:</strong> <em>E. coli</em> BL21(DE3) (protease-deficient, high expression)</li>
+            <li><strong>Transformation method:</strong> Electroporation (2.5 kV, 25 µF, 200 Ω, 0.1 cm cuvette)</li>
+            <li><strong>Recovery:</strong> SOC medium, 37°C, 1 h</li>
+            <li><strong>Plating:</strong> LB + appropriate antibiotic + 1 mM IPTG (inducer)</li>
+            <li><strong>Colony density target:</strong> 300–500 per 90 mm plate to allow individual screening</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <div class="method-header">
+          <div class="method-num">WL-4</div>
+          <div>
+            <h3>Primary selection</h3>
+            <div class="method-status-row">
+              <span class="badge badge--progress">In Progress</span>
+              <a href={`${b}/results#wetlab-selection`} class="method-link">Results (pending) →</a>
+            </div>
+          </div>
+        </div>
+        <div class="method-body">
+          <h4>Project A — cellobiose sole-carbon selection</h4>
+          <p>
+            Transformants are plated onto M9 minimal medium with cellobiose (10 mM) as the
+            sole carbon source. Wild-type <em>E. coli</em> cannot metabolise cellobiose;
+            colonies that grow have either acquired or up-regulated the ability to cleave
+            cellobiose, selecting for beta-glucosidase activity (or phosphotransferase
+            system import — see screening step WL-5 for discrimination).
+          </p>
+
+          <h4>Project B — CMC plate clearing</h4>
+          <p>
+            Transformants are plated on LB + 0.5% carboxymethylcellulose (CMC) + IPTG.
+            After 24 h growth, plates are stained with Congo Red (0.1%, 15 min) and
+            destained with 1 M NaCl. Clear halos around colonies indicate CMCase
+            (endoglucanase) activity. Halo diameter is proportional to activity level,
+            enabling direct visual screening for improved endoglucanase variants.
+          </p>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <div class="method-header">
+          <div class="method-num">WL-5</div>
+          <div>
+            <h3>Secondary screening: fluorogenic enzyme assays</h3>
+            <div class="method-status-row">
+              <span class="badge badge--progress">In Progress</span>
+              <a href={`${b}/results#wetlab-assays`} class="method-link">Results (pending) →</a>
+            </div>
+          </div>
+        </div>
+        <div class="method-body">
+          <p>
+            Colonies passing primary selection are screened in liquid culture with fluorogenic
+            substrates. 4-methylumbelliferyl (MU) substrates release the fluorophore
+            4-methylumbelliferone (MU, excitation 360 nm, emission 450 nm) upon hydrolysis,
+            enabling quantitative measurement of specific enzymatic activities.
+          </p>
+          <table class="data-table mt-4">
+            <thead>
+              <tr><th>Substrate</th><th>Abbreviation</th><th>Activity detected</th><th>Relevance</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>4-methylumbelliferyl-β-D-glucopyranoside</td>
+                <td class="mono">MUG</td>
+                <td>Beta-glucosidase</td>
+                <td>Project A (primary screen)</td>
+              </tr>
+              <tr>
+                <td>4-methylumbelliferyl-β-D-cellobioside</td>
+                <td class="mono">MUC</td>
+                <td>Exoglucanase / cellobiohydrolase</td>
+                <td>Project B</td>
+              </tr>
+              <tr>
+                <td>Carboxymethylcellulose + DNS assay</td>
+                <td class="mono">CMC-DNS</td>
+                <td>Endoglucanase</td>
+                <td>Project B (quantitative)</td>
+              </tr>
+            </tbody>
+          </table>
+          <h4 class="mt-4">Assay conditions</h4>
+          <ul class="param-list">
+            <li><strong>Substrate concentration:</strong> 1 mM MUG/MUC in 50 mM sodium phosphate buffer, pH 7.0</li>
+            <li><strong>Enzyme source:</strong> Clarified cell lysate (sonication, 4°C, 20 min, 15,000 × g)</li>
+            <li><strong>Reaction volume:</strong> 200 µL in 96-well flat-bottom plate</li>
+            <li><strong>Incubation:</strong> 37°C, 60 min</li>
+            <li><strong>Stop:</strong> 50 µL 1 M Na₂CO₃ (raises pH, maximises MU fluorescence)</li>
+            <li><strong>Measurement:</strong> Fluorescence plate reader, Ex 360 nm / Em 450 nm</li>
+            <li><strong>Controls:</strong> Wild-type CxnA (positive), empty vector (negative), substrate blank</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="method-block">
+        <div class="method-header">
+          <div class="method-num">WL-6</div>
+          <div>
+            <h3>Hit validation and sequencing</h3>
+            <div class="method-status-row">
+              <span class="badge badge--pending">Pending</span>
+            </div>
+          </div>
+        </div>
+        <div class="method-body">
+          <p>
+            Confirmed hits from WL-5 will be validated by:
+          </p>
+          <ol class="param-list">
+            <li>Retest of the same clone in triplicate on the same day</li>
+            <li>Retest in a second independent induction experiment</li>
+            <li>Plasmid isolation and Sanger sequencing to identify mutations</li>
+            <li>Re-transformation into a clean BL21(DE3) background to confirm that the activity is plasmid-encoded</li>
+            <li>Purification of the mutant protein by <span class="badge badge--pending">method pending</span> chromatography for specific activity determination vs WT baseline</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .pipeline-figure { margin: 0; }
+  .pipeline-svg {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    padding: var(--sp-4);
+  }
+  figcaption {
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+    margin-top: var(--sp-3);
+    font-style: italic;
+    text-align: center;
+    max-width: 70ch;
+    margin-inline: auto;
+  }
+
+  /* Method blocks */
+  .method-block {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--sp-6);
+    overflow: hidden;
+  }
+  .method-header {
+    display: flex;
+    gap: var(--sp-4);
+    align-items: flex-start;
+    padding: var(--sp-5) var(--sp-6);
+    border-bottom: 1px solid var(--c-border-light);
+    background: var(--c-surface-2);
+  }
+  .method-num {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--c-primary);
+    background: var(--c-primary-light);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    padding: 0.25em 0.6em;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .method-header h3 { color: var(--c-secondary); font-size: 1.05rem; margin-bottom: var(--sp-2); }
+  .method-status-row { display: flex; align-items: center; gap: var(--sp-3); }
+  .method-link { font-size: 0.82rem; font-weight: 600; color: var(--c-primary); }
+
+  .method-body {
+    padding: var(--sp-5) var(--sp-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+  .method-body p { font-size: 0.93rem; }
+  .method-body h4 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--c-text-muted);
+    margin-bottom: 0;
+  }
+
+  .param-list {
+    padding-left: var(--sp-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+  .param-list li { font-size: 0.9rem; color: var(--c-text); }
+  .param-list li strong { color: var(--c-secondary); }
+
+  ol.param-list { list-style: decimal; }
+
+  .pending-hint {
+    font-size: 0.82em;
+    color: var(--c-text-faint);
+    font-style: italic;
+  }
+</style>

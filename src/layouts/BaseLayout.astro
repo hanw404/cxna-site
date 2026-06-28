@@ -1,0 +1,259 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title,
+  description = 'Directed evolution of the bifunctional cellulase CxnA toward trifunctionality — an iDEC 2025 project.',
+  image = '/cxna-site/images/og-default.png',
+} = Astro.props;
+
+// Normalise base: strip trailing slash so we always write `${b}/page`
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/svg+xml" href={`${b}/favicon.svg`} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <header class="site-header" role="banner">
+      <div class="container header-inner">
+        <a href={`${b}/`} class="site-logo" aria-label="CxnA Project home">
+          <span class="logo-icon" aria-hidden="true">⬡</span>
+          <span class="logo-name">TriCel</span>
+          <span class="logo-sub">CxnA Directed Evolution</span>
+        </a>
+
+        <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-hidden="true" />
+        <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </label>
+
+        <nav class="site-nav" aria-label="Primary navigation">
+          <ul role="list">
+            <li><a href={`${b}/overview`}>Overview</a></li>
+            <li><a href={`${b}/science`}>Science</a></li>
+            <li><a href={`${b}/methods`}>Methods</a></li>
+            <li><a href={`${b}/results`}>Results</a></li>
+            <li class="nav-divider"></li>
+            <li>
+              <a href="https://idec.io" target="_blank" rel="noopener" class="nav-idec">
+                iDEC
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <span class="logo-icon" aria-hidden="true">⬡</span>
+          <span><strong>TriCel</strong> — CxnA Directed Evolution Project</span>
+        </div>
+        <p class="footer-idec">
+          Affiliated with <a href="https://idec.io" target="_blank" rel="noopener">iDEC</a>
+          <span class="footer-idec-note">(International Directed Evolution Competition)</span>
+        </p>
+        <p class="footer-note">
+          All data, methods, and lab notebook entries are published here as the complete public record of this project.
+          Source code and raw data: <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>.
+        </p>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href={`${b}/overview`}>Overview</a>
+          <a href={`${b}/science`}>Science</a>
+          <a href={`${b}/methods`}>Methods</a>
+          <a href={`${b}/results`}>Results</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>
+
+<style>
+  /* Skip link */
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: var(--sp-4);
+    background: var(--c-primary);
+    color: #fff;
+    padding: var(--sp-2) var(--sp-4);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    font-weight: 600;
+    z-index: 999;
+    transition: top 0.2s;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* Header */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--c-surface);
+    border-bottom: 1px solid var(--c-border);
+    box-shadow: var(--shadow-sm);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-6);
+    height: 56px;
+  }
+
+  /* Logo */
+  .site-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    text-decoration: none;
+    color: var(--c-text);
+    flex-shrink: 0;
+  }
+  .site-logo:hover { text-decoration: none; }
+  .logo-icon { font-size: 1.3rem; color: var(--c-primary); line-height: 1; }
+  .logo-name { font-weight: 700; font-size: 1rem; color: var(--c-secondary); }
+  .logo-sub {
+    font-size: 0.72rem;
+    color: var(--c-text-faint);
+    padding-left: var(--sp-2);
+    border-left: 1px solid var(--c-border);
+    margin-left: var(--sp-1);
+    display: none;
+  }
+  @media (min-width: 520px) { .logo-sub { display: block; } }
+
+  /* Nav */
+  .site-nav { margin-left: auto; }
+  .site-nav ul {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-1);
+    list-style: none;
+  }
+  .site-nav a {
+    padding: var(--sp-2) var(--sp-3);
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--c-text-muted);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .site-nav a:hover, .site-nav a[aria-current="page"] {
+    color: var(--c-primary);
+    background: var(--c-primary-light);
+    text-decoration: none;
+  }
+  .nav-divider { width: 1px; height: 20px; background: var(--c-border); margin-inline: var(--sp-1); }
+  .nav-idec { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.04em; }
+
+  /* Mobile nav toggle */
+  .nav-toggle-input { display: none; }
+  .nav-toggle-label {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    margin-left: auto;
+    padding: var(--sp-2);
+  }
+  .nav-toggle-label span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--c-text-muted);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+
+  @media (max-width: 720px) {
+    .nav-toggle-label { display: flex; }
+    .site-nav {
+      display: none;
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background: var(--c-surface);
+      border-bottom: 1px solid var(--c-border);
+      padding: var(--sp-4) var(--sp-6);
+      box-shadow: var(--shadow-md);
+    }
+    .site-nav ul {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--sp-1);
+    }
+    .nav-divider { width: 100%; height: 1px; margin-block: var(--sp-2); }
+    .nav-toggle-input:checked ~ .site-nav { display: block; }
+  }
+
+  /* Footer */
+  .site-footer {
+    background: var(--c-secondary);
+    color: rgba(232, 244, 238, 0.75);
+    padding-block: var(--sp-10) var(--sp-8);
+    margin-top: var(--sp-12);
+  }
+  .footer-inner {
+    display: grid;
+    gap: var(--sp-4);
+  }
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: 0.95rem;
+    color: #e8f4ee;
+  }
+  .footer-brand strong { color: #ffffff; }
+  .footer-brand .logo-icon { color: #7ec9a6; }
+  .footer-idec { font-size: 0.88rem; }
+  .footer-idec a { color: #7ec9a6; }
+  .footer-idec-note { font-size: 0.82em; opacity: 0.7; }
+  .footer-note { font-size: 0.82rem; max-width: 60ch; }
+  .footer-note a { color: #7ec9a6; }
+  .footer-nav {
+    display: flex;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+    padding-top: var(--sp-4);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: var(--sp-2);
+  }
+  .footer-nav a { font-size: 0.85rem; color: rgba(232,244,238,0.65); }
+  .footer-nav a:hover { color: #7ec9a6; text-decoration: none; }
+</style>

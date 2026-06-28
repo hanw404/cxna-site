@@ -1,0 +1,428 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const b = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<BaseLayout
+  title="TriCel — CxnA Directed Evolution | iDEC 2025"
+  description="Engineering a trifunctional cellulose-degrading enzyme via directed evolution. An iDEC 2025 research project combining AlphaFold3 structural analysis with wet-lab molecular biology."
+>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <p class="hero-eyebrow">iDEC 2025 &mdash; Directed Evolution</p>
+        <h1 id="hero-heading">
+          One enzyme.<br />
+          Three activities.<br />
+          <span class="hero-accent">Cellulose to glucose.</span>
+        </h1>
+        <p class="hero-lead">
+          We are engineering a single protein capable of breaking down crystalline cellulose
+          all the way to usable glucose &mdash; by evolving a new catalytic activity into
+          CxnA, a naturally bifunctional cellulase from <em>Cellulomonas fimi</em>.
+        </p>
+        <div class="hero-actions">
+          <a href={`${b}/overview`} class="btn btn-primary">Project Overview</a>
+          <a href={`${b}/results`} class="btn btn-secondary">View Results</a>
+        </div>
+        <a
+          href="https://idec.io"
+          target="_blank"
+          rel="noopener"
+          class="idec-badge mt-6"
+          aria-label="iDEC — International Directed Evolution Competition (opens in new tab)"
+        >
+          <span class="idec-dot" aria-hidden="true"></span>
+          Affiliated with iDEC
+          <span class="idec-badge-note">International Directed Evolution Competition</span>
+        </a>
+      </div>
+
+      <div class="hero-diagram" aria-hidden="true">
+        <!-- Trifunctional enzyme schematic SVG -->
+        <svg viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg" class="enzyme-svg">
+          <defs>
+            <linearGradient id="chainGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#2d9c6e"/>
+              <stop offset="60%" style="stop-color:#1a6648"/>
+              <stop offset="100%" style="stop-color:#c9862a"/>
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- Substrate labels top -->
+          <text x="90" y="28" text-anchor="middle" font-size="11" fill="#7ec9a6" font-family="system-ui,sans-serif" font-weight="600">CRYSTALLINE</text>
+          <text x="90" y="42" text-anchor="middle" font-size="11" fill="#7ec9a6" font-family="system-ui,sans-serif" font-weight="600">CELLULOSE</text>
+          <text x="250" y="28" text-anchor="middle" font-size="11" fill="#7ec9a6" font-family="system-ui,sans-serif" font-weight="600">AMORPHOUS</text>
+          <text x="250" y="42" text-anchor="middle" font-size="11" fill="#7ec9a6" font-family="system-ui,sans-serif" font-weight="600">CELLULOSE &amp; CELLOBIOSE</text>
+          <text x="415" y="28" text-anchor="middle" font-size="11" fill="#f0a830" font-family="system-ui,sans-serif" font-weight="600">GLUCOSE</text>
+          <text x="415" y="42" text-anchor="middle" font-size="11" fill="#f0a830" font-family="system-ui,sans-serif" font-weight="600">(USABLE FUEL)</text>
+
+          <!-- Arrow connectors between domains -->
+          <path d="M150,160 L178,160" stroke="#4aa87a" stroke-width="2" marker-end="url(#arrowGreen)" fill="none"/>
+          <path d="M315,160 L343,160" stroke="#c9862a" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrowAmber)" fill="none"/>
+          <text x="329" y="150" text-anchor="middle" font-size="9.5" fill="#c9862a" font-family="system-ui,sans-serif" font-style="italic">evolving →</text>
+
+          <defs>
+            <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#4aa87a"/>
+            </marker>
+            <marker id="arrowAmber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#c9862a"/>
+            </marker>
+          </defs>
+
+          <!-- GH10 / Exoglucanase domain -->
+          <rect x="20" y="120" width="130" height="80" rx="12" fill="#1a6648" filter="url(#glow)"/>
+          <text x="85" y="152" text-anchor="middle" font-size="13" fill="white" font-family="system-ui,sans-serif" font-weight="700">GH10 / Cex</text>
+          <text x="85" y="169" text-anchor="middle" font-size="10.5" fill="#a8d5bc" font-family="system-ui,sans-serif">Exoglucanase</text>
+          <text x="85" y="185" text-anchor="middle" font-size="9.5" fill="#7ec9a6" font-family="system-ui,sans-serif">attacks chain ends</text>
+          <text x="85" y="212" text-anchor="middle" font-size="9" fill="#5aaa85" font-family="system-ui,sans-serif">EXISTING ACTIVITY</text>
+
+          <!-- GH10 / Endoglucanase domain -->
+          <rect x="178" y="120" width="137" height="80" rx="12" fill="#1a6648" filter="url(#glow)"/>
+          <text x="247" y="152" text-anchor="middle" font-size="13" fill="white" font-family="system-ui,sans-serif" font-weight="700">GH10 / CenA</text>
+          <text x="247" y="169" text-anchor="middle" font-size="10.5" fill="#a8d5bc" font-family="system-ui,sans-serif">Endoglucanase</text>
+          <text x="247" y="185" text-anchor="middle" font-size="9.5" fill="#7ec9a6" font-family="system-ui,sans-serif">internal chain cleavage</text>
+          <text x="247" y="212" text-anchor="middle" font-size="9" fill="#5aaa85" font-family="system-ui,sans-serif">EXISTING ACTIVITY</text>
+
+          <!-- GH1 / Beta-glucosidase domain (the evolving target) -->
+          <rect x="343" y="112" width="140" height="96" rx="12" fill="#8a5a12" stroke="#c9862a" stroke-width="2.5" stroke-dasharray="6,3"/>
+          <text x="413" y="147" text-anchor="middle" font-size="13" fill="white" font-family="system-ui,sans-serif" font-weight="700">GH1 domain</text>
+          <text x="413" y="164" text-anchor="middle" font-size="10.5" fill="#f0c070" font-family="system-ui,sans-serif">β-glucosidase</text>
+          <text x="413" y="181" text-anchor="middle" font-size="9.5" fill="#f0c070" font-family="system-ui,sans-serif">cellobiose → glucose</text>
+          <text x="413" y="200" text-anchor="middle" font-size="9" fill="#c9862a" font-family="system-ui,sans-serif">TARGET (Project A)</text>
+
+          <!-- Linker regions -->
+          <rect x="148" y="150" width="32" height="20" rx="4" fill="#0d4a32"/>
+          <text x="164" y="163" text-anchor="middle" font-size="8" fill="#4aa87a" font-family="system-ui,sans-serif">linker</text>
+
+          <!-- Protein chain line underneath -->
+          <path d="M20,230 Q250,255 480,230" stroke="url(#chainGrad)" stroke-width="3" fill="none" opacity="0.4"/>
+          <text x="250" y="250" text-anchor="middle" font-size="10" fill="#7ec9a6" font-family="system-ui,sans-serif" font-style="italic">single polypeptide chain (CxnA)</text>
+
+          <!-- Legend -->
+          <rect x="20" y="270" width="12" height="12" rx="2" fill="#1a6648"/>
+          <text x="37" y="281" font-size="9.5" fill="#a8d5bc" font-family="system-ui,sans-serif">Existing activity (CxnA WT)</text>
+          <rect x="200" y="270" width="12" height="12" rx="2" fill="none" stroke="#c9862a" stroke-width="2" stroke-dasharray="4,2"/>
+          <text x="217" y="281" font-size="9.5" fill="#f0c070" font-family="system-ui,sans-serif">Evolved target — Project A</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROJECT A / B OVERVIEW ═══ -->
+  <section class="section section--alt" aria-labelledby="projects-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">Two parallel tracks</p>
+        <h2 id="projects-heading">What this project is doing</h2>
+        <p>
+          CxnA already does two things. We want to give it a third — and make those first two better.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        <div class="card card--accent project-card">
+          <div class="project-label">Project A</div>
+          <h3>Trifunctional evolution</h3>
+          <p class="mt-4">
+            Using directed evolution to introduce <strong>beta-glucosidase activity</strong>
+            into the GH1 domain of CxnA. If successful, the resulting enzyme would convert
+            cellulose all the way to glucose in a single protein, without requiring a
+            separate beta-glucosidase.
+          </p>
+          <p class="mt-4">
+            No direct precedent exists in the literature for evolving a GH10 scaffold toward
+            GH1-type activity. This project tests that gap directly.
+          </p>
+          <div class="project-tags mt-6">
+            <span class="badge badge--progress">In Progress</span>
+            <span class="tag">epPCR</span>
+            <span class="tag">MUG selection</span>
+            <span class="tag">GH1 docking</span>
+          </div>
+        </div>
+
+        <div class="card card--accent project-card">
+          <div class="project-label">Project B</div>
+          <h3>Activity enhancement</h3>
+          <p class="mt-4">
+            Using directed evolution to improve CxnA's <strong>existing exoglucanase and
+            endoglucanase activities</strong> — making it a more efficient cellulose-degrading
+            enzyme overall, regardless of whether Project A succeeds.
+          </p>
+          <p class="mt-4">
+            Guided by the AlphaFold3 structural analysis and PLIP interaction maps to target
+            residues most likely to influence substrate binding and catalytic efficiency.
+          </p>
+          <div class="project-tags mt-6">
+            <span class="badge badge--progress">In Progress</span>
+            <span class="tag">epPCR</span>
+            <span class="tag">CMC assay</span>
+            <span class="tag">GH10 docking</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Why it matters -->
+      <div class="callout mt-8">
+        <p class="callout-title">Why this matters</p>
+        <p>
+          Cellulose is the most abundant organic material on Earth. Converting it to glucose
+          efficiently — without expensive multi-enzyme cocktails — could make biofuel production
+          and biomass recycling significantly cheaper and more practical. This project also tests
+          how far AI-assisted structural prediction can responsibly guide directed evolution, and
+          where it cannot substitute for real experimental data.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ APPROACH OVERVIEW ═══ -->
+  <section class="section" aria-labelledby="approach-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="eyebrow">How we're doing it</p>
+        <h2 id="approach-heading">Dry lab + wet lab, in parallel</h2>
+      </div>
+
+      <div class="grid-3">
+        <div class="approach-card">
+          <div class="approach-icon" aria-hidden="true">🔬</div>
+          <h3>Structural prediction</h3>
+          <p>AlphaFold3 models of the GH10 and GH1 domains, validated against the 1FHD crystal structure (RMSD 0.293 Å).</p>
+          <a href={`${b}/results#drylab-structure`} class="approach-link">See validation results →</a>
+        </div>
+        <div class="approach-card">
+          <div class="approach-icon" aria-hidden="true">⚛</div>
+          <h3>Molecular docking</h3>
+          <p>Autodock Vina docking of cellobiose into both active sites, with PLIP interaction analysis of key catalytic residues.</p>
+          <a href={`${b}/results#drylab-docking`} class="approach-link">See docking results →</a>
+        </div>
+        <div class="approach-card">
+          <div class="approach-icon" aria-hidden="true">🧫</div>
+          <h3>Directed evolution</h3>
+          <p>Error-prone PCR mutagenesis libraries screened by growth on selective media and fluorogenic enzyme assays.</p>
+          <a href={`${b}/methods#wetlab`} class="approach-link">See methods →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ NAV CARDS ═══ -->
+  <section class="section section--alt" aria-labelledby="nav-heading">
+    <div class="container">
+      <h2 id="nav-heading" class="sr-only">Site sections</h2>
+      <div class="nav-cards">
+        <a href={`${b}/science`} class="nav-card">
+          <span class="nav-card-icon" aria-hidden="true">📖</span>
+          <h3>The Science</h3>
+          <p>Cellulose degradation biology, CxnA's origin, directed evolution, and key literature.</p>
+        </a>
+        <a href={`${b}/methods`} class="nav-card">
+          <span class="nav-card-icon" aria-hidden="true">⚗</span>
+          <h3>Methods</h3>
+          <p>Full dry-lab and wet-lab protocols — AlphaFold3, Autodock Vina, cloning, epPCR, assays.</p>
+        </a>
+        <a href={`${b}/results`} class="nav-card">
+          <span class="nav-card-icon" aria-hidden="true">📊</span>
+          <h3>Results</h3>
+          <p>Dry-lab structural and docking results, plus structured placeholders for incoming wet-lab data.</p>
+        </a>
+        <a href={`${b}/overview`} class="nav-card">
+          <span class="nav-card-icon" aria-hidden="true">🗺</span>
+          <h3>Full Overview</h3>
+          <p>The complete project context, both tracks explained side by side, and iDEC affiliation details.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ─── Hero ───────────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(145deg, #152e24 0%, #1a4a35 50%, #1f5a42 100%);
+    padding-block: 4rem 3rem;
+    overflow: hidden;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-10);
+    align-items: center;
+  }
+  @media (max-width: 860px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-diagram { order: -1; }
+  }
+
+  .hero-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7ec9a6;
+    margin-bottom: var(--sp-4);
+  }
+  h1 { color: #ffffff; line-height: 1.1; font-size: clamp(2rem, 4.5vw, 3rem); }
+  .hero-accent { color: #7ec9a6; }
+  .hero-lead {
+    color: rgba(232,244,238,0.82);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-top: var(--sp-5);
+    max-width: 52ch;
+  }
+  .hero-actions {
+    display: flex;
+    gap: var(--sp-3);
+    margin-top: var(--sp-6);
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-3) var(--sp-5);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition: all 0.18s;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--c-primary);
+    color: #fff;
+    border: 2px solid var(--c-primary);
+  }
+  .btn-primary:hover { background: var(--c-primary-hover); border-color: var(--c-primary-hover); text-decoration: none; }
+  .btn-secondary {
+    background: transparent;
+    color: #e8f4ee;
+    border: 2px solid rgba(232,244,238,0.35);
+  }
+  .btn-secondary:hover { border-color: #7ec9a6; color: #7ec9a6; text-decoration: none; }
+
+  .idec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: rgba(232,244,238,0.7);
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius-md);
+    padding: var(--sp-2) var(--sp-3);
+    text-decoration: none;
+    transition: all 0.18s;
+  }
+  .idec-badge:hover { border-color: #7ec9a6; color: #7ec9a6; text-decoration: none; }
+  .idec-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #7ec9a6;
+    flex-shrink: 0;
+  }
+  .idec-badge-note {
+    font-weight: 400;
+    font-size: 0.76em;
+    opacity: 0.75;
+  }
+
+  .enzyme-svg {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* ─── Project cards ─────────────────────────────────────────── */
+  .project-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--c-primary);
+    background: var(--c-primary-light);
+    border-radius: var(--radius-sm);
+    padding: 0.15em 0.5em;
+    display: inline-block;
+    margin-bottom: var(--sp-3);
+  }
+  .project-card h3 { color: var(--c-secondary); }
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    align-items: center;
+  }
+  .tag {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--c-text-muted);
+    background: var(--c-surface-2);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    padding: 0.15em 0.55em;
+  }
+
+  /* ─── Approach cards ────────────────────────────────────────── */
+  .approach-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+  }
+  .approach-icon { font-size: 1.8rem; margin-bottom: var(--sp-3); }
+  .approach-card h3 { color: var(--c-secondary); margin-bottom: var(--sp-2); }
+  .approach-card p { font-size: 0.92rem; color: var(--c-text-muted); }
+  .approach-link {
+    display: inline-block;
+    margin-top: var(--sp-4);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--c-primary);
+  }
+
+  /* ─── Nav cards ─────────────────────────────────────────────── */
+  .nav-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--sp-4);
+  }
+  .nav-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-6);
+    text-decoration: none;
+    color: var(--c-text);
+    transition: all 0.2s;
+    display: block;
+  }
+  .nav-card:hover {
+    border-color: var(--c-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  .nav-card-icon { font-size: 1.6rem; display: block; margin-bottom: var(--sp-3); }
+  .nav-card h3 { color: var(--c-secondary); font-size: 1.05rem; margin-bottom: var(--sp-2); }
+  .nav-card p { font-size: 0.88rem; color: var(--c-text-muted); max-width: none; }
+
+  /* ─── Utility ───────────────────────────────────────────────── */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+</style>
