@@ -154,7 +154,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
           </div>
 
           <h4>pLDDT confidence summary</h4>
-          <table class="data-table">
+          <div class="table-wrap"><div class="table-scroll"><table class="data-table">
             <thead>
               <tr><th>Region</th><th>pLDDT range</th><th>Interpretation</th></tr>
             </thead>
@@ -164,7 +164,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
               <tr><td>GH1-fold catalytic core (incl. GLU350, GLU404)</td><td class="mono">&gt;85</td><td>High confidence</td></tr>
               <tr><td>Inter-domain linker</td><td class="mono">60–75</td><td>Moderate — expected (intrinsically flexible region)</td></tr>
             </tbody>
-          </table>
+          </table></div></div>
 
           <div class="callout">
             <p class="callout-title">Interpretation</p>
@@ -238,7 +238,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
           </div>
 
           <h4>GH10 PLIP interaction summary</h4>
-          <table class="data-table">
+          <div class="table-wrap"><div class="table-scroll"><table class="data-table">
             <thead>
               <tr><th>Residue</th><th>Interaction type</th><th>Ligand atom</th><th>Distance (Å)</th><th>Role</th></tr>
             </thead>
@@ -247,7 +247,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
               <tr><td class="mono">GLU233</td><td>H-bond (acceptor)</td><td>O1 cellobiose</td><td class="mono"><span class="value-placeholder">[x.xx]</span></td><td>Acid/base catalyst</td></tr>
               <tr><td class="mono">[additional residues]</td><td>Hydrophobic</td><td>–</td><td class="mono"><span class="value-placeholder">[x.xx]</span></td><td>Binding stabilisation</td></tr>
             </tbody>
-          </table>
+          </table></div></div>
           <p class="table-note">Full PLIP output file: <code>data/drylab/gh10_cellobiose_plip.txt</code> (to be added to GitHub repo)</p>
         </div>
       </div>
@@ -303,7 +303,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
           </div>
 
           <h4>GH1 PLIP interaction summary (top pose)</h4>
-          <table class="data-table">
+          <div class="table-wrap"><div class="table-scroll"><table class="data-table">
             <thead>
               <tr><th>Residue</th><th>Interaction type</th><th>Ligand atom</th><th>Role / Note</th></tr>
             </thead>
@@ -313,7 +313,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
               <tr><td class="mono">GLN87</td><td>Steric clash</td><td>Multiple</td><td><strong>Barrier residue</strong> — partially blocks active-site access</td></tr>
               <tr><td class="mono">TRP281</td><td>Hydrophobic block</td><td>–</td><td><strong>Barrier residue</strong> — hydrophobic bulk limits cellobiose accommodation</td></tr>
             </tbody>
-          </table>
+          </table></div></div>
 
           <div class="callout callout--warn">
             <p class="callout-title">Honest interpretation — what this does and does not tell us</p>
@@ -459,7 +459,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
         <div class="result-body">
           <h4>GH10 — Cellobiose interactions (top pose)</h4>
-          <table class="data-table">
+          <div class="table-wrap"><div class="table-scroll"><table class="data-table">
             <thead>
               <tr><th>Interaction</th><th>Protein residue</th><th>Ligand atom</th><th>Distance (Å)</th><th>Angle (°)</th></tr>
             </thead>
@@ -468,11 +468,11 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
               <tr><td>H-bond</td><td class="mono">GLU233</td><td>O1</td><td class="mono value-placeholder">[x.xx]</td><td class="mono value-placeholder">[xxx]</td></tr>
               <tr><td>Hydrophobic</td><td class="mono">[residue]</td><td>–</td><td class="mono value-placeholder">[x.xx]</td><td>–</td></tr>
             </tbody>
-          </table>
+          </table></div></div>
           <p class="table-note">Full PLIP report: <code>data/drylab/gh10_cellobiose_plip_full.txt</code></p>
 
           <h4 class="mt-6">GH1 — Cellobiose interactions (top pose)</h4>
-          <table class="data-table">
+          <div class="table-wrap"><div class="table-scroll"><table class="data-table">
             <thead>
               <tr><th>Interaction</th><th>Protein residue</th><th>Ligand atom</th><th>Distance (Å)</th><th>Note</th></tr>
             </thead>
@@ -482,7 +482,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
               <tr><td>Steric clash</td><td class="mono">GLN87</td><td>Multiple</td><td class="mono value-placeholder">[x.xx]</td><td>Barrier residue</td></tr>
               <tr><td>Hydrophobic block</td><td class="mono">TRP281</td><td>–</td><td class="mono value-placeholder">[x.xx]</td><td>Barrier residue</td></tr>
             </tbody>
-          </table>
+          </table></div></div>
           <p class="table-note">Full PLIP report: <code>data/drylab/gh1_cellobiose_plip_full.txt</code></p>
         </div>
       </div>

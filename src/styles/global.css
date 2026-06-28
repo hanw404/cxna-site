@@ -258,6 +258,42 @@ details.expand > .expand-body {
 }
 
 /* ─── Tables ─────────────────────────────────────────────────────── */
+/* Scrollable wrapper with right-edge fade cue on mobile */
+.table-wrap {
+  position: relative;
+  margin-block: var(--sp-4);
+  min-width: 0; /* flex children default min-width:auto overrides overflow constraint */
+}
+.table-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 60px;
+  /* Use rgba so it works over glassmorphism cards */
+  background: linear-gradient(to left, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 2;
+}
+[data-theme="dark"] .table-wrap::after {
+  background: linear-gradient(to left, rgba(17,30,22,0.95) 0%, rgba(17,30,22,0) 100%);
+}
+.table-wrap.scroll-at-end::after { opacity: 0; }
+/* Hide fade on desktop where table usually fits */
+@media (min-width: 768px) { .table-wrap::after { display: none; } }
+
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-border) transparent;
+}
+.table-scroll::-webkit-scrollbar { height: 5px; }
+.table-scroll::-webkit-scrollbar-track { background: transparent; }
+.table-scroll::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 99px; }
+
 .data-table {
   width: 100%;
   border-collapse: collapse;
