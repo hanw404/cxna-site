@@ -20,6 +20,46 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
   </section>
 
+  <!-- ═══ TOC — pill-bar (mobile/tablet) ═══ -->
+  <nav class="toc-pill-bar" aria-label="Jump to method">
+    <div class="toc-pill-bar-inner">
+      <span class="toc-section-label">Dry lab</span>
+      <a href="#method-dl1">DL-1</a>
+      <a href="#method-dl2">DL-2</a>
+      <a href="#method-dl3">DL-3</a>
+      <a href="#method-dl4">DL-4</a>
+      <a href="#method-dl5">DL-5</a>
+      <div class="toc-divider"></div>
+      <span class="toc-section-label">Wet lab</span>
+      <a href="#method-wl1">WL-1</a>
+      <a href="#method-wl2">WL-2</a>
+      <a href="#method-wl3">WL-3</a>
+      <a href="#method-wl4">WL-4</a>
+      <a href="#method-wl5">WL-5</a>
+      <a href="#method-wl6">WL-6</a>
+    </div>
+  </nav>
+
+  <!-- ═══ TOC — fixed sidebar (desktop ≥1380px) ═══ -->
+  <aside class="toc-fixed" aria-label="Methods contents">
+    <p class="toc-fixed-title">Methods</p>
+    <nav>
+      <p class="toc-group-head">Dry lab</p>
+      <a href="#method-dl1"><span class="toc-id">DL-1</span><span class="toc-label">AlphaFold3</span></a>
+      <a href="#method-dl2"><span class="toc-id">DL-2</span><span class="toc-label">RMSD validation</span></a>
+      <a href="#method-dl3"><span class="toc-id">DL-3</span><span class="toc-label">Autodock Vina</span></a>
+      <a href="#method-dl4"><span class="toc-id">DL-4</span><span class="toc-label">PLIP / PoseView</span></a>
+      <a href="#method-dl5"><span class="toc-id">DL-5</span><span class="toc-label">Convergence</span></a>
+      <p class="toc-group-head">Wet lab</p>
+      <a href="#method-wl1"><span class="toc-id">WL-1</span><span class="toc-label">Cloning</span></a>
+      <a href="#method-wl2"><span class="toc-id">WL-2</span><span class="toc-label">epPCR library</span></a>
+      <a href="#method-wl3"><span class="toc-id">WL-3</span><span class="toc-label">Transformation</span></a>
+      <a href="#method-wl4"><span class="toc-id">WL-4</span><span class="toc-label">Selection</span></a>
+      <a href="#method-wl5"><span class="toc-id">WL-5</span><span class="toc-label">Screening</span></a>
+      <a href="#method-wl6"><span class="toc-id">WL-6</span><span class="toc-label">Hit validation</span></a>
+    </nav>
+  </aside>
+
   <!-- ═══ WORKFLOW OVERVIEW ═══ -->
   <section class="section section--alt" aria-labelledby="workflow-heading">
     <div class="container">
@@ -142,7 +182,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         <h2 id="drylab-heading">Dry lab: structural prediction and docking</h2>
       </div>
 
-      <div class="method-block">
+      <div class="method-block" id="method-dl1">
         <div class="method-header">
           <div class="method-num">DL-1</div>
           <div>
@@ -191,7 +231,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
 
-      <div class="method-block">
+      <div class="method-block" id="method-dl2">
         <div class="method-header">
           <div class="method-num">DL-2</div>
           <div>
@@ -229,7 +269,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
 
-      <div class="method-block">
+      <div class="method-block" id="method-dl3">
         <div class="method-header">
           <div class="method-num">DL-3</div>
           <div>
@@ -276,7 +316,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
 
-      <div class="method-block">
+      <div class="method-block" id="method-dl4">
         <div class="method-header">
           <div class="method-num">DL-4</div>
           <div>
@@ -326,7 +366,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
 
-      <div class="method-block">
+      <div class="method-block" id="method-dl5">
         <div class="method-header">
           <div class="method-num">DL-5</div>
           <div>
@@ -369,7 +409,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         <h2 id="wetlab-heading">Wet lab: cloning, mutagenesis, selection, and screening</h2>
       </div>
 
-      <div class="method-block">
+      <div class="method-block" id="method-wl1">
         <div class="method-header">
           <div class="method-num">WL-1</div>
           <div>
@@ -416,7 +456,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
 
-      <div class="method-block">
+      <div class="method-block" id="method-wl2">
         <div class="method-header">
           <div class="method-num">WL-2</div>
           <div>
@@ -462,7 +502,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
 
-      <div class="method-block">
+      <div class="method-block" id="method-wl3">
         <div class="method-header">
           <div class="method-num">WL-3</div>
           <div>
@@ -483,7 +523,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
 
-      <div class="method-block">
+      <div class="method-block" id="method-wl4">
         <div class="method-header">
           <div class="method-num">WL-4</div>
           <div>
@@ -515,7 +555,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
 
-      <div class="method-block">
+      <div class="method-block" id="method-wl5">
         <div class="method-header">
           <div class="method-num">WL-5</div>
           <div>
@@ -571,7 +611,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
         </div>
       </div>
 
-      <div class="method-block">
+      <div class="method-block" id="method-wl6">
         <div class="method-header">
           <div class="method-num">WL-6</div>
           <div>
@@ -597,6 +637,21 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
   </section>
 
+  <script>
+    // Highlight active TOC entry as user scrolls
+    const targets = document.querySelectorAll('[id^="method-"]');
+    const links = document.querySelectorAll('.toc-pill-bar a, .toc-fixed a');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.remove('toc-active'));
+          links.forEach(l => { if (l.getAttribute('href') === '#' + e.target.id) l.classList.add('toc-active'); });
+        }
+      });
+    }, { rootMargin: '-56px 0px -60% 0px', threshold: 0 });
+    targets.forEach(t => obs.observe(t));
+  </script>
+
 </BaseLayout>
 
 <style>
@@ -620,11 +675,19 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   /* Method blocks */
   .method-block {
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: var(--radius-xl);
     margin-bottom: var(--sp-6);
     overflow: hidden;
+    box-shadow: 0 4px 24px rgba(26, 102, 72, 0.07), inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+  :global([data-theme="dark"]) .method-block {
+    background: rgba(17, 30, 22, 0.65);
+    border-color: rgba(61, 214, 140, 0.12);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(61,214,140,0.08);
   }
   .method-header {
     display: flex;

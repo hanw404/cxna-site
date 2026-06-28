@@ -20,6 +20,46 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
   </section>
 
+  <!-- ═══ TOC — pill-bar (mobile/tablet) ═══ -->
+  <nav class="toc-pill-bar" aria-label="Jump to result">
+    <div class="toc-pill-bar-inner">
+      <span class="toc-section-label">Dry lab</span>
+      <a href="#drylab-structure">DL-R1</a>
+      <a href="#drylab-gh10">DL-R2</a>
+      <a href="#drylab-gh1">DL-R3</a>
+      <a href="#drylab-docking">DL-R4</a>
+      <a href="#drylab-convergence">DL-R5</a>
+      <a href="#drylab-plip">DL-R6</a>
+      <div class="toc-divider"></div>
+      <span class="toc-section-label">Wet lab</span>
+      <a href="#wetlab-cloning">WL-R1</a>
+      <a href="#wetlab-eppcr">WL-R2</a>
+      <a href="#wetlab-selection">WL-R3</a>
+      <a href="#wetlab-assays">WL-R4</a>
+      <a href="#wetlab-hits">WL-R5</a>
+    </div>
+  </nav>
+
+  <!-- ═══ TOC — fixed sidebar (desktop ≥1380px) ═══ -->
+  <aside class="toc-fixed" aria-label="Results contents">
+    <p class="toc-fixed-title">Results</p>
+    <nav>
+      <p class="toc-group-head">Dry lab</p>
+      <a href="#drylab-structure"><span class="toc-id">DL-R1</span><span class="toc-label">Structure quality</span></a>
+      <a href="#drylab-gh10"><span class="toc-id">DL-R2</span><span class="toc-label">GH10 docking</span></a>
+      <a href="#drylab-gh1"><span class="toc-id">DL-R3</span><span class="toc-label">GH1 docking</span></a>
+      <a href="#drylab-docking"><span class="toc-id">DL-R4</span><span class="toc-label">Score caveat</span></a>
+      <a href="#drylab-convergence"><span class="toc-id">DL-R5</span><span class="toc-label">Convergence</span></a>
+      <a href="#drylab-plip"><span class="toc-id">DL-R6</span><span class="toc-label">PLIP tables</span></a>
+      <p class="toc-group-head">Wet lab</p>
+      <a href="#wetlab-cloning"><span class="toc-id">WL-R1</span><span class="toc-label">Cloning</span></a>
+      <a href="#wetlab-eppcr"><span class="toc-id">WL-R2</span><span class="toc-label">epPCR library</span></a>
+      <a href="#wetlab-selection"><span class="toc-id">WL-R3</span><span class="toc-label">Selection</span></a>
+      <a href="#wetlab-assays"><span class="toc-id">WL-R4</span><span class="toc-label">Assays</span></a>
+      <a href="#wetlab-hits"><span class="toc-id">WL-R5</span><span class="toc-label">Hit validation</span></a>
+    </nav>
+  </aside>
+
   <!-- ═══ STATUS SUMMARY ═══ -->
   <section class="section section--alt" aria-labelledby="status-heading">
     <div class="container">
@@ -624,7 +664,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
 
       <!-- WL-R5: Hit validation -->
-      <div class="result-block">
+      <div class="result-block" id="wetlab-hits">
         <div class="result-header">
           <div class="result-id">WL-R5</div>
           <div>
@@ -717,6 +757,21 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
     </div>
   </section>
 
+  <script>
+    // Highlight active TOC entry as user scrolls
+    const targets = document.querySelectorAll('.result-block[id]');
+    const links = document.querySelectorAll('.toc-pill-bar a, .toc-fixed a');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          links.forEach(l => l.classList.remove('toc-active'));
+          links.forEach(l => { if (l.getAttribute('href') === '#' + e.target.id) l.classList.add('toc-active'); });
+        }
+      });
+    }, { rootMargin: '-56px 0px -60% 0px', threshold: 0 });
+    targets.forEach(t => obs.observe(t));
+  </script>
+
 </BaseLayout>
 
 <style>
@@ -744,11 +799,19 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
 
   /* Result blocks */
   .result-block {
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: var(--radius-xl);
     margin-bottom: var(--sp-8);
     overflow: hidden;
+    box-shadow: 0 4px 24px rgba(26, 102, 72, 0.07), inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+  :global([data-theme="dark"]) .result-block {
+    background: rgba(17, 30, 22, 0.65);
+    border-color: rgba(61, 214, 140, 0.12);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(61,214,140,0.08);
   }
   .result-header {
     display: flex;

@@ -31,8 +31,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <title>{title}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Prevent flash of wrong theme -->
+    <script is:inline>
+      (function(){
+        var s=localStorage.getItem('theme');
+        var p=window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if(s==='dark'||(s==null&&p)) document.documentElement.setAttribute('data-theme','dark');
+      })();
+    </script>
   </head>
   <body>
+    <div id="progress-bar" aria-hidden="true"></div>
     <a href="#main" class="skip-link">Skip to content</a>
 
     <header class="site-header" role="banner">
@@ -42,6 +51,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           <span class="logo-name">TriCel</span>
           <span class="logo-sub">CxnA Directed Evolution</span>
         </a>
+
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
 
         <input type="checkbox" id="nav-toggle" class="nav-toggle-input" aria-hidden="true" />
         <label for="nav-toggle" class="nav-toggle-label" aria-label="Toggle navigation">
@@ -69,6 +83,28 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <main id="main">
       <slot />
     </main>
+
+    <script>
+      // Scroll progress bar
+      const bar = document.getElementById('progress-bar');
+      if (bar) {
+        window.addEventListener('scroll', () => {
+          const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+          bar.style.width = Math.min(100, pct) + '%';
+        }, { passive: true });
+      }
+
+      // Dark mode toggle
+      const btn = document.getElementById('theme-toggle');
+      if (btn) {
+        btn.addEventListener('click', () => {
+          const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+          const next = isDark ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
+    </script>
 
     <footer class="site-footer">
       <div class="container footer-inner">
@@ -154,7 +190,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   @media (min-width: 520px) { .logo-sub { display: block; } }
 
   /* Nav */
-  .site-nav { margin-left: auto; }
+  .site-nav { margin-left: var(--sp-2); }
   .site-nav ul {
     display: flex;
     align-items: center;
@@ -179,6 +215,29 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   }
   .nav-divider { width: 1px; height: 20px; background: var(--c-border); margin-inline: var(--sp-1); }
   .nav-idec { font-weight: 700; font-size: 0.8rem; letter-spacing: 0.04em; }
+
+  /* Dark mode toggle */
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    background: var(--c-surface-2);
+    color: var(--c-text-muted);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
+    margin-left: auto;
+  }
+  .theme-toggle:hover { color: var(--c-primary); border-color: var(--c-primary); background: var(--c-primary-light); }
+  /* Show sun in dark mode, moon in light mode */
+  .icon-moon { display: block; }
+  .icon-sun  { display: none; }
+  :global([data-theme="dark"]) .icon-moon { display: none; }
+  :global([data-theme="dark"]) .icon-sun  { display: block; }
 
   /* Mobile nav toggle */
   .nav-toggle-input { display: none; }
