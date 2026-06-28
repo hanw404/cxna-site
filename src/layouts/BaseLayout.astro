@@ -122,11 +122,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         new ResizeObserver(check).observe(el);
       });
 
-      // TOC pill-bar scroll fade cue
+      // TOC pill-bar scroll fade cue + arrow hint dismiss
       document.querySelectorAll('.toc-pill-bar').forEach(el => {
         const wrap = el.closest('.toc-pill-wrap');
         if (!wrap) return;
-        const check = () => wrap.classList.toggle('pill-at-end', el.scrollLeft + el.clientWidth >= el.scrollWidth - 2);
+        const check = () => {
+          wrap.classList.toggle('pill-at-end', el.scrollLeft + el.clientWidth >= el.scrollWidth - 2);
+          if (el.scrollLeft > 0) wrap.classList.add('pill-scrolled');
+        };
         check();
         el.addEventListener('scroll', check, { passive: true });
         new ResizeObserver(check).observe(el);
