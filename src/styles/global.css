@@ -461,13 +461,31 @@ details.expand > .expand-body {
 }
 
 /* ─── TOC sidebar (methods & results pages) ──────────────────────── */
-.toc-pill-bar {
+.toc-pill-wrap {
   position: sticky;
   top: 56px;
   z-index: 50;
   background: var(--c-surface);
   border-bottom: 1px solid var(--c-border);
   box-shadow: var(--shadow-sm);
+}
+.toc-pill-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 48px;
+  background: linear-gradient(to left, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.25s ease;
+}
+[data-theme="dark"] .toc-pill-wrap::after {
+  background: linear-gradient(to left, rgba(17,30,22,0.97) 0%, rgba(17,30,22,0) 100%);
+}
+.toc-pill-wrap.pill-at-end::after { opacity: 0; }
+@media (min-width: 768px) { .toc-pill-wrap::after { display: none; } }
+
+.toc-pill-bar {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -526,7 +544,7 @@ details.expand > .expand-body {
   display: none;
 }
 @media (min-width: 1380px) {
-  .toc-pill-bar { display: none; }
+  .toc-pill-wrap { display: none; }
   .toc-fixed {
     display: block;
     position: fixed;
