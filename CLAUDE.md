@@ -16,7 +16,7 @@ $env:PATH = "D:\claudeStuff\nodejs-link;" + $env:PATH
 | Production build | `npm run build` |
 | Preview production build | `npm run preview` |
 
-No lint or test scripts — Astro's TypeScript checking runs as part of the build. A clean `npm run build` (5 pages, 0 errors) is the acceptance check.
+No lint or test scripts — Astro's TypeScript checking runs as part of the build. A clean `npm run build` (0 errors) is the acceptance check. Page count grows as notebook entries are added; the current count is shown in the build output.
 
 The dev server launch config is at `.claude/launch.json` and can be started with the `preview_start` MCP tool (`name: "cxna-dev"`).
 
@@ -59,18 +59,11 @@ The dev server launch config is at `.claude/launch.json` and can be started with
 - Section anchors must match exactly: methods use `id="method-dl1"` … `id="method-wl6"`, results use `id="drylab-structure"`, `id="drylab-gh10"`, etc.
 - IntersectionObserver lives in a `<script>` block at the bottom of each page (not in BaseLayout). Adding a new section requires: the `id` on the block, a link in the pill-bar, and a link in the fixed sidebar.
 
-**Content model:** All content is inline in the `.astro` page files — no CMS, no Markdown files yet. Phase 2 adds a Markdown lab notebook; Phase 3 adds a Mol* 3D viewer; Phase 4 adds deep-linking between Methods/Results and notebook entries.
+**Content model:** Science/methods/results pages are inline HTML in `.astro` files. Lab notebook entries are Markdown files in an Astro content collection. Phase 3 adds a Mol* 3D viewer; Phase 4 adds deep-linking between Methods/Results and notebook entries.
 
 **Structure files** (`.cif`, `.pdb`, `.pdbqt`) go in `/structures/` in the repo root — loaded client-side by the Mol* viewer (Phase 3). Do not move them.
 
-**Lab notebook entries** (Phase 2) will use this frontmatter schema:
-```yaml
-date: YYYY-MM-DD
-project: A | B | both
-type: wet-lab | dry-lab
-status: confirmed | in-progress | pending
-```
-`status` maps to `.badge--confirmed` / `.badge--progress` / `.badge--pending`.
+**Lab notebook system** — see dedicated section below.
 
 **Placeholder result sections:** use `.placeholder-block` + `.pending-label` inside a `.result-block` that is structurally identical to finished dry-lab blocks — same `.result-header`, `.result-id`, `.result-meta` badge row with `badge--pending`. Do not simplify the structure; it must be ready to receive real data by replacing only the inner `.placeholder-block`.
 
@@ -82,6 +75,64 @@ status: confirmed | in-progress | pending
 - `science.astro` — cellulose biology, enzyme classes, CxnA origin, directed evolution mechanism, key literature
 - `methods.astro` — workflow pipeline SVG, dry-lab methods DL-1–DL-5, wet-lab methods WL-1–WL-6
 - `results.astro` — dry-lab results DL-R1–DL-R6 (complete), wet-lab results WL-R1–WL-R5 (placeholders), reference list
+- `notebook/index.astro` — weekly grouped entry timeline with Wet lab / Dry lab filter buttons
+- `notebook/[slug].astro` — individual entry page with prev/next navigation
+
+## Lab notebook system
+
+### File structure
+
+```
+src/content/
+  config.ts                      # Zod collection schema
+  labnotes/
+    YYYY-MM-DD-wet.md            # wet-lab entry
+    YYYY-MM-DD-dry.md            # dry-lab entry
+```
+
+Each calendar day can have **at most two files** — one wet-lab and one dry-lab. The slug used in the URL is the filename without `.md` (e.g. `2026-06-18-dry` → `/notebook/2026-06-18-dry`). No manual route wiring needed: `getCollection('labnotes')` auto-discovers all files.
+
+### Frontmatter schema
+
+```yaml
+---
+title: "Short descriptive title"
+date: YYYY-MM-DD        # must be a parseable date; Zod coerces it
+project: A | B | both   # which directed evolution track this covers
+type: wet-lab | dry-lab
+status: confirmed | in-progress | pending
+---
+```
+
+All five fields are **required** (Zod will throw a build error if any are missing). The schema is defined in `src/content/config.ts`.
+
+`status` maps to badge classes: `confirmed` → `.badge--confirmed` (green), `in-progress` → `.badge--progress` (amber), `pending` → `.badge--pending` (grey).
+
+`project` controls the "Project A / Project B / Both projects" label on the individual entry page. Use `both` for entries that cover dry-lab analyses applicable to both tracks, or wet-lab work that feeds both.
+
+### Ordering and prev/next navigation
+
+The index page sorts all entries by `date` ascending. Entries with the same date are ordered alphabetically by slug — which means `dry` comes before `wet` on the same day. This ordering also governs the prev/next links on individual entry pages.
+
+### Filter system
+
+The index page has "All entries / Wet lab / Dry lab" buttons that toggle `hidden` on `.entry-card` elements via the `data-type` attribute, and collapse `.week-group` sections whose cards all become hidden.
+
+**CSS footgun:** any element with an explicit `display` value (e.g. `display: grid`) overrides the browser's built-in `[hidden] { display: none }` since they share the same specificity. Always add `[element][hidden] { display: none !important }` alongside any `display` rule on a filterable element.
+
+### Adding a new entry
+
+1. Create `src/content/labnotes/YYYY-MM-DD-{wet|dry}.md` with all five frontmatter fields.
+2. Run `npm run build` to confirm 0 errors (Zod validates the frontmatter at build time).
+3. No changes needed to any `.astro` page files — the index and detail pages auto-discover the new entry.
+
+### Prose conventions
+
+- Use `##` headings for major sections within an entry, `###` for sub-sections.
+- Tables render with full styling — no wrapper div needed (the `[slug].astro` prose styles handle `display: block` + `overflow-x: auto` on `table` directly).
+- For caveats or flagged items, use `> blockquote` syntax.
+- Missing attachment files: `*[Attachment: filename.ext]*` in italics — these are deliberate placeholders, not errors.
+- Preserve negative results honestly. Use `status: pending` for entries whose outcome isn't recorded yet; use `status: in-progress` for entries that are partially complete.
 
 ## Deployment
 
