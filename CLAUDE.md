@@ -16,58 +16,73 @@ $env:PATH = "D:\claudeStuff\nodejs-link;" + $env:PATH
 | Production build | `npm run build` |
 | Preview production build | `npm run preview` |
 
-There are no lint or test scripts — Astro's TypeScript checking runs as part of the build. A clean `npm run build` (5 pages, 0 errors) is the acceptance check.
+No lint or test scripts — Astro's TypeScript checking runs as part of the build. A clean `npm run build` (5 pages, 0 errors) is the acceptance check.
 
 The dev server launch config is at `.claude/launch.json` and can be started with the `preview_start` MCP tool (`name: "cxna-dev"`).
 
 ## Architecture
 
-**Stack:** Astro 4 (static output) → GitHub Pages via `.github/workflows/deploy.yml`.
+**Stack:** Astro 4 (static output) → GitHub Pages via `.github/workflows/deploy.yml`. Site is live; `site` and `base` are already set in `astro.config.mjs`.
 
-**Base path:** `base: '/cxna-site'` in `astro.config.mjs` means all internal links must be constructed as `${b}/page` where `b = import.meta.env.BASE_URL.replace(/\/$/, '')`. Every page file already does this. Forgetting the slash separator produces broken URLs like `/cxna-sitescience`.
+**Base path:** `base: '/cxna-site'` means all internal links must be `${b}/page` where `b = import.meta.env.BASE_URL.replace(/\/$/, '')`. Every page file already does this. Forgetting the separator produces broken URLs like `/cxna-sitescience`.
 
-**Layout:** One shared layout at `src/layouts/BaseLayout.astro`. It owns the sticky nav (CSS-only mobile hamburger via `<input type="checkbox">`), sticky header, and footer. Pass `title` and optionally `description` as props.
+**Layout:** `src/layouts/BaseLayout.astro` owns everything in the shell:
+- Sticky header with CSS-only mobile hamburger (`<input type="checkbox" id="nav-toggle">`), slide/X animation, active nav link via `aria-current="page"` set by JS on load
+- `#theme-toggle` button (dark mode, always in header — not inside the dropdown)
+- `<div id="progress-bar">` scroll depth indicator (fixed, green→amber gradient)
+- FOUC-prevention inline script in `<head>` (reads `localStorage` before paint)
+- Shared `<script>` block handling: progress bar, dark mode toggle, active nav, table scroll fades, TOC pill-bar scroll fade + arrow hint
 
-**Design system:** `src/styles/global.css` is imported globally via `<style is:global>` in `BaseLayout.astro`. It defines all CSS custom properties (`--c-*` palette, `--sp-*` spacing scale, `--font-sans/mono`). Component-level styles live in `<style>` blocks inside each `.astro` file and are scoped automatically by Astro.
+**Dark mode:** `[data-theme="dark"]` on `<html>` swaps all `--c-*` variables. Persisted via `localStorage('theme')`. Respects `prefers-color-scheme` on first visit. The inline script in `<head>` prevents flash of wrong theme — do not remove it or move it below the stylesheet link.
+
+**Design system:** `src/styles/global.css` defines all CSS custom properties (`--c-*` palette, `--sp-*` spacing scale, `--font-sans/mono`). Component-level styles live in `<style>` blocks inside each `.astro` file and are scoped by Astro automatically.
 
 **Key CSS patterns:**
 - Status badges: `.badge--confirmed` / `.badge--progress` / `.badge--pending`
+- Pending inline hint: `.pending-hint` (used in methods.astro for unfinished steps)
 - Expandable sections: native `<details class="expand">` / `<summary>` — no JS
-- Result/method blocks: `.result-block` / `.method-block` (header + body split)
+- Method/result cards: `.method-block` / `.result-block` — glassmorphism (`backdrop-filter: blur(14px)`, semi-transparent `rgba` backgrounds). Do **not** set a solid `var(--c-surface)` background on these; it breaks the blur effect.
 - Figure placeholders: `.placeholder-block` with `.pending-label` for wet-lab pending data
-- In-text citations: `<a class="cite" href="#ref-x">[n]</a>` linking to `<li id="ref-x">` in the reference list
 - Key findings: `.key-finding` / `.key-finding--warn` callout blocks
+- In-text citations: `<a class="cite" href="#ref-x">[n]</a>` → `<li id="ref-x">` in reference list
+- Dark mode toggle: `.theme-toggle` button with `.icon-sun` / `.icon-moon` swap
 
-**Content model:** All content is inline in the `.astro` page files — no CMS, no Markdown files yet. Phase 2 will add a Markdown-based lab notebook system; Phase 3 adds a Mol* 3D structure viewer; Phase 4 adds deep-linking between Methods/Results and notebook entries.
+**Table scroll pattern (mobile):** Every `<table class="data-table">` must be wrapped:
+```html
+<div class="table-wrap"><div class="table-scroll"><table class="data-table">…</table></div></div>
+```
+`.table-wrap` must have `min-width: 0` (already in CSS) — without it, flex-column parents silently override `overflow-x: auto` via `min-width: auto`. The `::after` right-edge fade disappears via `.scroll-at-end` toggled by JS in BaseLayout.
 
-**Structure files** (`.cif`, `.pdb`, `.pdbqt`) go in `/structures/` in the repo root. They are loaded client-side by the Mol* viewer (Phase 3) directly from that path — do not move them elsewhere.
+**TOC system (methods & results only):**
+- Mobile/tablet: `<div class="toc-pill-wrap"><nav class="toc-pill-bar">…</nav></div>` — sticky at `top: 56px`, horizontally scrollable. The outer `.toc-pill-wrap` holds the `::after` fade and the `::before` animated arrow hint (fires once on page load, dismissed on first scroll via `pill-scrolled` class).
+- Desktop ≥1380px: `<aside class="toc-fixed">` — fixed sidebar, `.toc-pill-wrap` is hidden.
+- Section anchors must match exactly: methods use `id="method-dl1"` … `id="method-wl6"`, results use `id="drylab-structure"`, `id="drylab-gh10"`, etc.
+- IntersectionObserver lives in a `<script>` block at the bottom of each page (not in BaseLayout). Adding a new section requires: the `id` on the block, a link in the pill-bar, and a link in the fixed sidebar.
 
-**Lab notebook entries** (Phase 2) will be Markdown files with this frontmatter schema:
+**Content model:** All content is inline in the `.astro` page files — no CMS, no Markdown files yet. Phase 2 adds a Markdown lab notebook; Phase 3 adds a Mol* 3D viewer; Phase 4 adds deep-linking between Methods/Results and notebook entries.
+
+**Structure files** (`.cif`, `.pdb`, `.pdbqt`) go in `/structures/` in the repo root — loaded client-side by the Mol* viewer (Phase 3). Do not move them.
+
+**Lab notebook entries** (Phase 2) will use this frontmatter schema:
 ```yaml
----
 date: YYYY-MM-DD
 project: A | B | both
 type: wet-lab | dry-lab
 status: confirmed | in-progress | pending
----
 ```
-The `project` and `date` fields power the dual chronological/project indexes. The `status` field maps directly to the `.badge--confirmed` / `.badge--progress` / `.badge--pending` CSS classes.
+`status` maps to `.badge--confirmed` / `.badge--progress` / `.badge--pending`.
 
-**Placeholder results sections:** when a wet-lab result is not yet available, use `.placeholder-block` + `.pending-label` inside a `.result-block` that is structurally identical to the finished dry-lab result blocks above it — same `.result-header` with method cross-link, same `.result-id` tag, same `.result-meta` badge row, just with `badge--pending` and no data. Do not abbreviate or simplify the placeholder structure; it must be ready to receive real content by replacing the inner `.placeholder-block` only.
+**Placeholder result sections:** use `.placeholder-block` + `.pending-label` inside a `.result-block` that is structurally identical to finished dry-lab blocks — same `.result-header`, `.result-id`, `.result-meta` badge row with `badge--pending`. Do not simplify the structure; it must be ready to receive real data by replacing only the inner `.placeholder-block`.
 
-**SVG diagrams** are all inline in the page files (no external assets). The enzyme schematic (home hero), cellulose polymer diagram (science page), degradation pathway (science page), and workflow pipeline (methods page) are all hand-authored SVGs with `viewBox` coordinates. Figures that will eventually hold real data are represented as `.placeholder-block` divs with `<code>` paths indicating where image files should go (e.g. `figures/drylab/af3_vs_1FHD_overlay.png`).
+**SVG diagrams** are all inline (no external assets): enzyme schematic (home hero), cellulose polymer + degradation pathway (science), workflow pipeline (methods). Future figures use `.placeholder-block` divs with `<code>` paths (e.g. `figures/drylab/af3_vs_1FHD_overlay.png`).
 
 **Pages and their primary sections:**
 - `index.astro` — hero with trifunctional enzyme SVG, Project A/B cards, approach overview, nav cards
 - `overview.astro` — plain-language summary, Project A vs B side-by-side tracks, iDEC affiliation
-- `science.astro` — cellulose biology, three enzyme classes, CxnA origin, directed evolution mechanism, key literature
-- `methods.astro` — workflow pipeline SVG, dry-lab methods DL-1 through DL-5, wet-lab methods WL-1 through WL-6
-- `results.astro` — dry-lab results DL-R1 through DL-R6 (complete), wet-lab results WL-R1 through WL-R5 (placeholder structure), full reference list
+- `science.astro` — cellulose biology, enzyme classes, CxnA origin, directed evolution mechanism, key literature
+- `methods.astro` — workflow pipeline SVG, dry-lab methods DL-1–DL-5, wet-lab methods WL-1–WL-6
+- `results.astro` — dry-lab results DL-R1–DL-R6 (complete), wet-lab results WL-R1–WL-R5 (placeholders), reference list
 
 ## Deployment
 
-Before first deploy, update `astro.config.mjs`:
-- `site` → `https://hanw404.github.io` ✓ (already set)
-- `base` → `/cxna-site` ✓ (already set)
-
-Then push to `main`. GitHub Actions handles the rest (`actions/deploy-pages`). Enable Pages in repo Settings → Pages → Source: GitHub Actions.
+Site is live at `https://hanw404.github.io/cxna-site`. Push to `main` — GitHub Actions deploys automatically via `actions/deploy-pages`. GitHub Pages source is set to GitHub Actions in repo Settings.
