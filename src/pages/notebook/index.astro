@@ -331,6 +331,10 @@ function statusLabel(s: string) {
     border-color: color-mix(in srgb, var(--c-secondary) 25%, transparent);
   }
 
+  /* Ensure hidden attribute works even when display:grid is set */
+  .entry-card[hidden],
+  .week-group[hidden] { display: none !important; }
+
   @media (max-width: 600px) {
     .entry-card {
       grid-template-columns: 1fr auto;
