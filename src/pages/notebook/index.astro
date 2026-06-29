@@ -80,9 +80,13 @@ function statusLabel(s: string) {
         computational analyses, and results as they happened. Negative and inconclusive
         results are preserved honestly.
       </p>
+      <div class="notebook-filters" role="group" aria-label="Filter by lab type">
+        <button class="filter-btn filter-btn--active" data-filter="all">All entries</button>
+        <button class="filter-btn filter-btn--wet" data-filter="wet-lab">Wet lab</button>
+        <button class="filter-btn filter-btn--dry" data-filter="dry-lab">Dry lab</button>
+        <span class="filter-count" aria-live="polite"></span>
+      </div>
       <div class="notebook-legend">
-        <span class="badge badge--wet">Wet lab</span>
-        <span class="badge badge--dry">Dry lab</span>
         <span class="badge badge--confirmed">Confirmed</span>
         <span class="badge badge--progress">In progress</span>
         <span class="badge badge--pending">Pending</span>
@@ -99,7 +103,7 @@ function statusLabel(s: string) {
         </h2>
         <div class="entry-list">
           {week.entries.map(entry => (
-            <a href={`${b}/notebook/${entry.slug}`} class="entry-card">
+            <a href={`${b}/notebook/${entry.slug}`} class="entry-card" data-type={entry.data.type}>
               <div class="entry-card-date">{formatDate(entry.data.date)}</div>
               <div class="entry-card-body">
                 <h3 class="entry-card-title">{entry.data.title}</h3>
@@ -117,6 +121,38 @@ function statusLabel(s: string) {
     ))}
 
   </main>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const cards = document.querySelectorAll<HTMLElement>('.entry-card');
+    const weeks = document.querySelectorAll<HTMLElement>('.week-group');
+    const countEl = document.querySelector<HTMLElement>('.filter-count');
+
+    function applyFilter(filter: string) {
+      let visible = 0;
+      cards.forEach(card => {
+        const match = filter === 'all' || card.dataset.type === filter;
+        card.hidden = !match;
+        if (match) visible++;
+      });
+      // Hide week sections that have no visible cards
+      weeks.forEach(week => {
+        const anyVisible = Array.from(week.querySelectorAll<HTMLElement>('.entry-card'))
+          .some(c => !c.hidden);
+        week.hidden = !anyVisible;
+      });
+      if (countEl) {
+        countEl.textContent = filter === 'all' ? '' : `${visible} ${visible === 1 ? 'entry' : 'entries'}`;
+      }
+      buttons.forEach(btn => {
+        btn.classList.toggle('filter-btn--active', btn.dataset.filter === filter);
+      });
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => applyFilter(btn.dataset.filter ?? 'all'));
+    });
+  </script>
 
 </BaseLayout>
 
@@ -145,6 +181,49 @@ function statusLabel(s: string) {
     font-size: 1.05rem;
     line-height: 1.7;
     margin: 0 0 var(--sp-5);
+  }
+  .notebook-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    align-items: center;
+    margin-bottom: var(--sp-4);
+  }
+  .filter-btn {
+    padding: 0.35em 1em;
+    border-radius: 999px;
+    border: 1.5px solid var(--c-border);
+    background: var(--c-surface);
+    color: var(--c-text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .filter-btn:hover {
+    border-color: var(--c-primary);
+    color: var(--c-primary);
+  }
+  .filter-btn--active {
+    background: var(--c-primary);
+    border-color: var(--c-primary);
+    color: #fff;
+  }
+  .filter-btn--active:hover {
+    color: #fff;
+  }
+  .filter-btn--wet.filter-btn--active {
+    background: var(--c-primary);
+    border-color: var(--c-primary);
+  }
+  .filter-btn--dry.filter-btn--active {
+    background: var(--c-secondary);
+    border-color: var(--c-secondary);
+  }
+  .filter-count {
+    font-size: 0.8rem;
+    color: var(--c-text-muted);
+    margin-left: var(--sp-1);
   }
   .notebook-legend {
     display: flex;
