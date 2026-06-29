@@ -1,0 +1,63 @@
+---
+// Minimal Mol* smoke-test — not linked from the site nav.
+// Visit /molstar-test to confirm the viewer loads GH10.cif.
+const b = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mol* test — GH10.cif</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/molstar/build/viewer/molstar.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; background: #111; }
+    #viewer { width: 100%; height: 100%; position: absolute; inset: 0; }
+    #status {
+      position: fixed;
+      top: 12px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,0.7);
+      color: #a8f0c6;
+      font: 600 13px/1 monospace;
+      padding: 6px 14px;
+      border-radius: 6px;
+      z-index: 9999;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer"></div>
+  <div id="status">Loading GH10.cif…</div>
+
+  <script is:inline src="https://cdn.jsdelivr.net/npm/molstar/build/viewer/molstar.js"></script>
+  <script is:inline define:vars={{ b }}>
+    molstar.Viewer.create('viewer', {
+      layoutIsExpanded: false,
+      layoutShowControls: true,
+      layoutShowRemoteState: false,
+      layoutShowSequence: true,
+      layoutShowLog: false,
+      layoutShowLeftPanel: true,
+      viewportShowExpand: false,
+      viewportShowSelectionMode: false,
+      viewportShowAnimation: false,
+    }).then(function(viewer) {
+      var url = b + '/structures/GH10.cif';
+      document.getElementById('status').textContent = 'Fetching ' + url + '…';
+      return viewer.loadStructureFromUrl(url, 'mmcif', false).then(function() {
+        document.getElementById('status').textContent = '✓ GH10.cif loaded';
+        setTimeout(function() {
+          document.getElementById('status').style.opacity = '0';
+          document.getElementById('status').style.transition = 'opacity 0.6s';
+        }, 2000);
+      });
+    }).catch(function(err) {
+      document.getElementById('status').textContent = '✗ ' + err.message;
+      document.getElementById('status').style.color = '#f87171';
+    });
+  </script>
+</body>
+</html>
