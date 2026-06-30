@@ -59,9 +59,13 @@ The dev server launch config is at `.claude/launch.json` and can be started with
 - Section anchors must match exactly: methods use `id="method-dl1"` … `id="method-wl6"`, results use `id="drylab-structure"`, `id="drylab-gh10"`, etc.
 - IntersectionObserver lives in a `<script>` block at the bottom of each page (not in BaseLayout). Adding a new section requires: the `id` on the block, a link in the pill-bar, and a link in the fixed sidebar.
 
-**Content model:** Science/methods/results pages are inline HTML in `.astro` files. Lab notebook entries are Markdown files in an Astro content collection. Phase 3 adds a Mol* 3D viewer; Phase 4 adds deep-linking between Methods/Results and notebook entries.
+**Content model:** Science/methods/results pages are inline HTML in `.astro` files. Lab notebook entries are Markdown files in an Astro content collection. Phase 3 (Mol* 3D viewer) is complete. Phase 4 adds deep-linking between Methods/Results and notebook entries.
 
-**Structure files** (`.cif`, `.pdb`, `.pdbqt`) go in `/structures/` in the repo root — loaded client-side by the Mol* viewer (Phase 3). Do not move them.
+**Structure files** (`.cif`, `.pdb`, `.pdbqt`) go in `/structures/` in the repo root — loaded client-side by the Mol* viewer. Do not move them.
+
+**Mol* 3D viewer (`src/pages/molstar-test.astro`):** Standalone full-page viewer (its own `<html>`, not BaseLayout). Loads GH10.cif (AlphaFold3 WT) and 1FHD.cif (crystal) via Mol* CDN (`molstar/build/viewer/molstar.js`), runs Kabsch alignment (0.579 Å Cα RMSD over 311 pairs), applies 3D superposition, and highlights active-site residues GLN87/GLU127/GLU233 as yellow spacefill. Has a loading overlay (spinner + progress messages) and a WebGL fallback message for unsupported devices. Dark mode is controlled externally via `postMessage({type:'cxna-theme', theme})` — the page defaults to `data-theme="dark"` and switches topbar colors when the parent sends a message.
+
+**DL-R2 embed:** `results.astro` embeds `molstar-test.astro` as `<iframe class="mol-iframe" loading="lazy">` inside a `.viewer-embed` container (520px desktop / 360px mobile). BaseLayout's theme-toggle handler broadcasts the current theme to all `iframe.mol-iframe` elements on click, and again on each iframe's `load` event for initial sync.
 
 **Lab notebook system** — see dedicated section below.
 

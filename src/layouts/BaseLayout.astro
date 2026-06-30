@@ -103,8 +103,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           const next = isDark ? 'light' : 'dark';
           document.documentElement.setAttribute('data-theme', next);
           localStorage.setItem('theme', next);
+          // Sync any embedded Mol* viewers
+          document.querySelectorAll('iframe.mol-iframe').forEach(f => {
+            f.contentWindow?.postMessage({ type: 'cxna-theme', theme: next }, '*');
+          });
         });
       }
+
+      // Send current theme to Mol* iframes once they finish loading
+      document.querySelectorAll('iframe.mol-iframe').forEach(iframe => {
+        iframe.addEventListener('load', () => {
+          const theme = document.documentElement.getAttribute('data-theme') || 'light';
+          iframe.contentWindow?.postMessage({ type: 'cxna-theme', theme }, '*');
+        });
+      });
 
       // Active nav link
       const path = window.location.pathname.replace(/\/$/, '');

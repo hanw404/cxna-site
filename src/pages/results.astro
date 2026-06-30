@@ -212,6 +212,20 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
             </div>
           </div>
 
+          <!-- 3D structural overlay — GH10 AlphaFold3 superimposed on 1FHD crystal -->
+          <div class="viewer-embed">
+            <iframe
+              src={`${b}/molstar-test`}
+              class="mol-iframe"
+              loading="lazy"
+              title="Interactive 3D: GH10 AlphaFold3 vs 1FHD crystal structure overlay"
+            ></iframe>
+          </div>
+          <p class="viewer-caption">
+            Interactive 3D overlay: GH10 AlphaFold3 model (teal) superimposed on 1FHD crystal structure (orange) — Cα RMSD 0.579 Å over 311 matched pairs.
+            Yellow spheres: active-site residues GLN87, GLU127, GLU233. Use the toggle buttons to compare structures independently.
+          </p>
+
           <div class="figure-block figure-block--3">
             <div class="figure-panel">
               <div class="placeholder-block">
@@ -800,6 +814,31 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
   .status-items { display: flex; flex-direction: column; gap: var(--sp-2); }
   .status-item { display: flex; align-items: center; gap: var(--sp-2); font-size: 0.88rem; }
 
+  /* Embedded Mol* viewer */
+  .viewer-embed {
+    width: 100%;
+    height: 520px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+    margin-top: var(--sp-6);
+  }
+  @media (max-width: 768px) {
+    .viewer-embed { height: 360px; }
+  }
+  .viewer-embed iframe {
+    width: 100%; height: 100%; border: none; display: block;
+  }
+  .viewer-caption {
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+    text-align: center;
+    max-width: none;
+    margin-top: var(--sp-3);
+    margin-bottom: var(--sp-8);
+    line-height: 1.5;
+  }
+
   /* Result blocks */
   .result-block {
     background: rgba(255, 255, 255, 0.72);
@@ -815,6 +854,16 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
     background: rgba(17, 30, 22, 0.65);
     border-color: rgba(61, 214, 140, 0.12);
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(61,214,140,0.08);
+  }
+  @media (max-width: 768px) {
+    .result-block {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(255, 255, 255, 0.97);
+    }
+    :global([data-theme="dark"]) .result-block {
+      background: rgba(17, 30, 22, 0.97);
+    }
   }
   .result-header {
     display: flex;
