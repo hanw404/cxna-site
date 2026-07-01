@@ -656,21 +656,6 @@ details.expand > .expand-body {
   .toc-fixed .toc-group-head:first-child { border-top: none; padding-top: 0; }
 }
 
-/* ─── Scroll-reveal ──────────────────────────────────────────────── */
-/* .reveal is added by JS only to off-screen elements, and only when
-   prefers-reduced-motion is not set — so this CSS never hides content
-   without JS having verified the user is OK with motion. */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-}
-.reveal.reveal--visible {
-  opacity: 1;
-  transform: none;
-  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
 /* ─── Badge pulse ─────────────────────────────────────────────────── */
 @keyframes badge-pulse {
   0%, 100% { opacity: 1; }

@@ -86,6 +86,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     </main>
 
     <script>
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      gsap.registerPlugin(ScrollTrigger);
+
       // Scroll progress bar
       const bar = document.getElementById('progress-bar');
       if (bar) {
@@ -135,23 +139,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         new ResizeObserver(check).observe(el);
       });
 
-      // Scroll-reveal — only off-viewport elements, only when reduced motion is not requested
+      // ScrollTrigger card reveals — replaces IntersectionObserver
       if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        const revealObs = new IntersectionObserver((entries) => {
-          entries.forEach(e => {
-            if (e.isIntersecting) {
-              e.target.classList.add('reveal--visible');
-              revealObs.unobserve(e.target);
-            }
-          });
-        }, { threshold: 0.08 });
         const vh = window.innerHeight;
-        document.querySelectorAll('.method-block, .result-block, .card, .approach-card, .nav-card').forEach(el => {
-          if (el.getBoundingClientRect().top > vh) {
-            el.classList.add('reveal');
-            revealObs.observe(el);
-          }
-        });
+        const offscreen = Array.from(
+          document.querySelectorAll('.method-block, .result-block, .card, .approach-card, .nav-card')
+        ).filter(el => el.getBoundingClientRect().top > vh);
+        if (offscreen.length) {
+          ScrollTrigger.batch(offscreen, {
+            onEnter: batch => gsap.fromTo(batch,
+              { opacity: 0, y: 20 },
+              { opacity: 1, y: 0, duration: 0.45, stagger: 0.07, ease: 'power2.out', overwrite: true }
+            ),
+            start: 'top 90%',
+            once: true,
+          });
+        }
       }
 
       // TOC pill-bar scroll fade cue + arrow hint dismiss
