@@ -839,6 +839,18 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
     line-height: 1.5;
   }
 
+  /* Dot-grid background so the glass blur has something to work against */
+  #drylab,
+  #wetlab {
+    background-image: radial-gradient(circle, var(--c-border) 1px, transparent 1px);
+    background-size: 22px 22px;
+    background-color: var(--c-bg);
+  }
+  :global([data-theme="dark"]) #drylab,
+  :global([data-theme="dark"]) #wetlab {
+    background-image: radial-gradient(circle, var(--c-border-light) 1px, transparent 1px);
+  }
+
   /* Result blocks */
   .result-block {
     background: rgba(255, 255, 255, 0.72);

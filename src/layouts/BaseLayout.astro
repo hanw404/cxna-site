@@ -135,6 +135,25 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         new ResizeObserver(check).observe(el);
       });
 
+      // Scroll-reveal — only off-viewport elements, only when reduced motion is not requested
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const revealObs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              e.target.classList.add('reveal--visible');
+              revealObs.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.08 });
+        const vh = window.innerHeight;
+        document.querySelectorAll('.method-block, .result-block, .card, .approach-card, .nav-card').forEach(el => {
+          if (el.getBoundingClientRect().top > vh) {
+            el.classList.add('reveal');
+            revealObs.observe(el);
+          }
+        });
+      }
+
       // TOC pill-bar scroll fade cue + arrow hint dismiss
       document.querySelectorAll('.toc-pill-bar').forEach(el => {
         const wrap = el.closest('.toc-pill-wrap');

@@ -14,9 +14,9 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
       <div class="hero-text">
         <p class="hero-eyebrow">iDEC 2025 &mdash; Directed Evolution</p>
         <h1 id="hero-heading">
-          One enzyme.<br />
-          Three activities.<br />
-          <span class="hero-accent">Cellulose to glucose.</span>
+          <span class="hero-line">One enzyme.</span>
+          <span class="hero-line">Three activities.</span>
+          <span class="hero-line"><span class="hero-accent">Cellulose to glucose.</span></span>
         </h1>
         <p class="hero-lead">
           We are engineering a single protein capable of breaking down crystalline cellulose
@@ -41,6 +41,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
       </div>
 
       <div class="hero-diagram" aria-hidden="true">
+        <div class="hero-glow"></div>
         <!-- Trifunctional enzyme schematic SVG -->
         <svg viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg" class="enzyme-svg">
           <defs>
@@ -65,7 +66,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
 
           <!-- Arrow connectors between domains -->
           <path d="M150,160 L178,160" stroke="#4aa87a" stroke-width="2" marker-end="url(#arrowGreen)" fill="none"/>
-          <path d="M315,160 L343,160" stroke="#c9862a" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrowAmber)" fill="none"/>
+          <path class="evolving-arrow" d="M315,160 L343,160" stroke="#c9862a" stroke-width="2.5" stroke-dasharray="5,3" marker-end="url(#arrowAmber)" fill="none"/>
           <text x="329" y="150" text-anchor="middle" font-size="9.5" fill="#c9862a" font-family="system-ui,sans-serif" font-style="italic">evolving →</text>
 
           <defs>
@@ -92,7 +93,7 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
           <text x="247" y="212" text-anchor="middle" font-size="9" fill="#5aaa85" font-family="system-ui,sans-serif">EXISTING ACTIVITY</text>
 
           <!-- GH1 / Beta-glucosidase domain (the evolving target) -->
-          <rect x="343" y="112" width="140" height="96" rx="12" fill="#8a5a12" stroke="#c9862a" stroke-width="2.5" stroke-dasharray="6,3"/>
+          <rect class="gh1-border" x="343" y="112" width="140" height="96" rx="12" fill="#8a5a12" stroke="#c9862a" stroke-width="2.5" stroke-dasharray="6,3"/>
           <text x="413" y="147" text-anchor="middle" font-size="13" fill="white" font-family="system-ui,sans-serif" font-weight="700">GH1 domain</text>
           <text x="413" y="164" text-anchor="middle" font-size="10.5" fill="#f0c070" font-family="system-ui,sans-serif">β-glucosidase</text>
           <text x="413" y="181" text-anchor="middle" font-size="9.5" fill="#f0c070" font-family="system-ui,sans-serif">cellobiose → glucose</text>
@@ -194,19 +195,25 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
 
       <div class="grid-3">
         <div class="approach-card">
-          <div class="approach-icon" aria-hidden="true">🔬</div>
+          <div class="approach-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
           <h3>Structural prediction</h3>
           <p>AlphaFold3 models of the GH10 and GH1 domains, validated against the 1FHD crystal structure (RMSD 0.293 Å).</p>
           <a href={`${b}/results#drylab-structure`} class="approach-link">See validation results →</a>
         </div>
         <div class="approach-card">
-          <div class="approach-icon" aria-hidden="true">⚛</div>
+          <div class="approach-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5z"/></svg>
+          </div>
           <h3>Molecular docking</h3>
           <p>Autodock Vina docking of cellobiose into both active sites, with PLIP interaction analysis of key catalytic residues.</p>
           <a href={`${b}/results#drylab-docking`} class="approach-link">See docking results →</a>
         </div>
         <div class="approach-card">
-          <div class="approach-icon" aria-hidden="true">🧫</div>
+          <div class="approach-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </div>
           <h3>Directed evolution</h3>
           <p>Error-prone PCR mutagenesis libraries screened by growth on selective media and fluorogenic enzyme assays.</p>
           <a href={`${b}/methods#wetlab`} class="approach-link">See methods →</a>
@@ -221,27 +228,37 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
       <h2 id="nav-heading" class="sr-only">Site sections</h2>
       <div class="nav-cards">
         <a href={`${b}/science`} class="nav-card">
-          <span class="nav-card-icon" aria-hidden="true">📖</span>
+          <span class="nav-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </span>
           <h3>The Science</h3>
           <p>Cellulose degradation biology, CxnA's origin, directed evolution, and key literature.</p>
         </a>
         <a href={`${b}/methods`} class="nav-card">
-          <span class="nav-card-icon" aria-hidden="true">⚗</span>
+          <span class="nav-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31L5.72 18.5A2 2 0 0 0 7.59 21h8.82a2 2 0 0 0 1.87-2.5L14 9.31V2"/><line x1="8.5" y1="2" x2="15.5" y2="2"/><line x1="7" y1="16" x2="17" y2="16"/></svg>
+          </span>
           <h3>Methods</h3>
           <p>Full dry-lab and wet-lab protocols — AlphaFold3, Autodock Vina, cloning, epPCR, assays.</p>
         </a>
         <a href={`${b}/results`} class="nav-card">
-          <span class="nav-card-icon" aria-hidden="true">📊</span>
+          <span class="nav-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>
+          </span>
           <h3>Results</h3>
           <p>Dry-lab structural and docking results, plus structured placeholders for incoming wet-lab data.</p>
         </a>
         <a href={`${b}/overview`} class="nav-card">
-          <span class="nav-card-icon" aria-hidden="true">🗺</span>
+          <span class="nav-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          </span>
           <h3>Full Overview</h3>
           <p>The complete project context, both tracks explained side by side, and iDEC affiliation details.</p>
         </a>
         <a href={`${b}/notebook`} class="nav-card">
-          <span class="nav-card-icon" aria-hidden="true">📓</span>
+          <span class="nav-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+          </span>
           <h3>Lab Notebook</h3>
           <p>Dated wet-lab and dry-lab entries — protocols, observations, and computational analyses as they happened.</p>
         </a>
@@ -278,7 +295,12 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
     margin-bottom: var(--sp-4);
   }
   h1 { color: #ffffff; line-height: 1.1; font-size: clamp(2rem, 4.5vw, 3rem); }
-  .hero-accent { color: #7ec9a6; }
+  .hero-accent {
+    background: linear-gradient(90deg, #7ec9a6 0%, #3dd68c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
   .hero-lead {
     color: rgba(232,244,238,0.82);
     font-size: 1.1rem;
@@ -343,11 +365,21 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
     opacity: 0.75;
   }
 
+  .hero-diagram { position: relative; }
+  .hero-glow {
+    position: absolute;
+    inset: -20% -10%;
+    background: radial-gradient(ellipse at center, rgba(61,214,140,0.14) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+  }
   .enzyme-svg {
     width: 100%;
     border-radius: var(--radius-lg);
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    z-index: 1;
   }
 
   /* ─── Project cards ─────────────────────────────────────────── */
@@ -387,7 +419,13 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
     border-radius: var(--radius-lg);
     padding: var(--sp-6);
   }
-  .approach-icon { font-size: 1.8rem; margin-bottom: var(--sp-3); }
+  .approach-icon {
+    width: 32px;
+    height: 32px;
+    color: var(--c-primary);
+    margin-bottom: var(--sp-3);
+  }
+  .approach-icon svg { width: 100%; height: 100%; }
   .approach-card h3 { color: var(--c-secondary); margin-bottom: var(--sp-2); }
   .approach-card p { font-size: 0.92rem; color: var(--c-text-muted); }
   .approach-link {
@@ -420,9 +458,49 @@ const b = import.meta.env.BASE_URL.replace(/\/$/, "");
     transform: translateY(-2px);
     text-decoration: none;
   }
-  .nav-card-icon { font-size: 1.6rem; display: block; margin-bottom: var(--sp-3); }
+  .nav-card-icon {
+    display: block;
+    width: 28px;
+    height: 28px;
+    color: var(--c-primary);
+    margin-bottom: var(--sp-3);
+  }
+  .nav-card-icon svg { width: 100%; height: 100%; }
   .nav-card h3 { color: var(--c-secondary); font-size: 1.05rem; margin-bottom: var(--sp-2); }
   .nav-card p { font-size: 0.88rem; color: var(--c-text-muted); max-width: none; }
+
+  /* ─── Hero h1 line stagger ──────────────────────────────────── */
+  @keyframes hero-line-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+  .hero-line {
+    display: block;
+    animation: hero-line-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .hero-line:nth-child(2) { animation-delay: 0.12s; }
+  .hero-line:nth-child(3) { animation-delay: 0.24s; }
+
+  /* ─── Flowing SVG animations ─────────────────────────────────── */
+  @keyframes flow-arrow {
+    to { stroke-dashoffset: -8; }
+  }
+  @keyframes march-border {
+    to { stroke-dashoffset: -9; }
+  }
+  .evolving-arrow {
+    animation: flow-arrow 1s linear infinite;
+  }
+  .gh1-border {
+    animation: march-border 4s linear infinite;
+  }
+
+  /* ─── prefers-reduced-motion — all CSS animations in this file ── */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-line          { animation: none; }
+    .evolving-arrow,
+    .gh1-border         { animation: none; }
+  }
 
   /* ─── Utility ───────────────────────────────────────────────── */
   .sr-only {
